@@ -1,7 +1,7 @@
 # Personal Blog - Project Planning
 
 ## Project Overview
-Building a modern, feature-rich personal blog inspired by Josh W. Comeau's approach, focusing on content creation, developer experience, and interactive elements.
+Building a modern, feature-rich personal blog focusing on content creation, developer experience, and interactive elements.
 
 ## Goals & Scope
 
