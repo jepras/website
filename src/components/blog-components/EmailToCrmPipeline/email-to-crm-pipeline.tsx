@@ -61,14 +61,13 @@ export default function EmailToCrmPipeline() {
       to: "bob@besafe.dk",
       content:
         "Hi Bob.\n\nI like what you have done to your office.\n\nWe need to get an upgrade on the security system in building 2. Can you send over a price?\n\nI'd like to get this done before next week.\n\nBest regards,\nHans Nielsen\nThe Municipality of Copenhagen\n+45 23 42 23 42",
-      annotations: ["can't extract name & org from email address", "potential deadline", "valuable for CRM entry"],
     },
     {
       from: "bob@besafe.dk",
       to: "hn@moc.dk",
       content:
         "Hi Hans.\n\nIt was great seeing you yesterday at the conference.\n\nThe price of 2 cameras, wiring and the security box will be €15.000.\n\nConfirm this email and we'll get this sorted.\n\nBest regards,\nBob",
-      annotations: ["text indicating an offer", "potential next steps"],
+      
     },
   ]
 
@@ -150,8 +149,8 @@ export default function EmailToCrmPipeline() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-6">
-          {/* Panel 1 - Email Chain */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left Panel - Email Chain */}
           <Card className="h-fit">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
@@ -194,114 +193,117 @@ export default function EmailToCrmPipeline() {
             </CardContent>
           </Card>
 
-          {/* Panel 2 - JSON Extract */}
-          <Card className={`h-fit transition-opacity ${currentStep === "email" ? "opacity-50" : "opacity-100"}`}>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <FileJson className="h-5 w-5" />
-                <span>JSON Extract</span>
-              </CardTitle>
-              <CardDescription>Structured data extracted by AI Agent 1</CardDescription>
-              <Button onClick={() => setCurrentStep("crm")} className="w-full" disabled={currentStep !== "json"}>
-                Check for duplicates and create deal
-              </Button>
-            </CardHeader>
-            <CardContent>
-              {currentStep === "email" ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <FileJson className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Click "Analyse email & extract deal data" to process emails</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="bg-muted p-4 rounded-md">
-                    <pre className="text-sm overflow-x-auto">{JSON.stringify(jsonData, null, 2)}</pre>
+          {/* Right Column - JSON Extract & CRM Entry */}
+          <div className="flex flex-col gap-6">
+            {/* JSON Extract */}
+            <Card className={`h-fit transition-opacity ${currentStep === "email" ? "opacity-50" : "opacity-100"}`}>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <FileJson className="h-5 w-5" />
+                  <span>JSON Extract</span>
+                </CardTitle>
+                <CardDescription>Structured data extracted by AI Agent 1</CardDescription>
+                <Button onClick={() => setCurrentStep("crm")} className="w-full" disabled={currentStep !== "json"}>
+                  Check for duplicates and create deal
+                </Button>
+              </CardHeader>
+              <CardContent>
+                {currentStep === "email" ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <FileJson className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>Click "Analyse email & extract deal data" to process emails</p>
                   </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Panel 3 - CRM Entry */}
-          <Card className={`h-fit transition-opacity ${currentStep !== "crm" ? "opacity-50" : "opacity-100"}`}>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Database className="h-5 w-5" />
-                <span>CRM Entry</span>
-              </CardTitle>
-              <CardDescription>Final CRM record created by AI Agent 2</CardDescription>
-              <Button onClick={() => setCurrentStep("email")} variant="outline" className="w-full mb-4">
-                Reset Demo
-              </Button>
-            </CardHeader>
-            <CardContent>
-              {currentStep !== "crm" ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <Database className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Convert JSON to see CRM entry</p>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {/* Contact Info */}
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-lg">Contact</h3>
-                    <div className="bg-muted p-3 rounded-md space-y-1">
-                      <div>
-                        <span className="font-medium">Name:</span> {crmEntry.contact.name}
-                      </div>
-                      <div>
-                        <span className="font-medium">Email:</span> {crmEntry.contact.email}
-                      </div>
-                      <div>
-                        <span className="font-medium">Phone:</span> {crmEntry.contact.phone}
-                      </div>
-                      <div>
-                        <span className="font-medium">Company:</span> {crmEntry.contact.company}
-                      </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="bg-muted p-4 rounded-md">
+                      <pre className="text-sm overflow-x-auto">{JSON.stringify(jsonData, null, 2)}</pre>
                     </div>
                   </div>
+                )}
+              </CardContent>
+            </Card>
 
-                  {/* Deal */}
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-lg">Deal</h3>
-                    <div className="bg-muted p-3 rounded-md space-y-1">
-                      <div>
-                        <span className="font-medium">Title:</span> {crmEntry.opportunity.title}
-                      </div>
-                      <div>
-                        <span className="font-medium">Value:</span> {crmEntry.opportunity.value}
-                      </div>
-                      <div>
-                        <span className="font-medium">Stage:</span> {crmEntry.opportunity.stage}
-                      </div>
-                      <div>
-                        <span className="font-medium">Close Date:</span> {crmEntry.opportunity.close_date}
-                      </div>
-                      <div>
-                        <span className="font-medium">Description:</span> {crmEntry.opportunity.description}
-                      </div>
-                    </div>
+            {/* CRM Entry */}
+            <Card className={`h-fit transition-opacity ${currentStep !== "crm" ? "opacity-50" : "opacity-100"}`}>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Database className="h-5 w-5" />
+                  <span>CRM Entry</span>
+                </CardTitle>
+                <CardDescription>Final CRM record created by AI Agent 2</CardDescription>
+                <Button onClick={() => setCurrentStep("email")} variant="outline" className="w-full mb-4">
+                  Reset Demo
+                </Button>
+              </CardHeader>
+              <CardContent>
+                {currentStep !== "crm" ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <Database className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>Convert JSON to see CRM entry</p>
                   </div>
-
-                  {/* Activities */}
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-lg">Activities</h3>
+                ) : (
+                  <div className="space-y-6">
+                    {/* Contact Info */}
                     <div className="space-y-2">
-                      {crmEntry.activities.map((activity, index) => (
-                        <div key={index} className="bg-muted p-3 rounded-md">
-                          <div className="flex justify-between items-start mb-1">
-                            <Badge variant="outline">{activity.type}</Badge>
-                            <span className="text-sm text-muted-foreground">{activity.date}</span>
-                          </div>
-                          <div className="text-sm">{activity.description}</div>
+                      <h3 className="font-semibold text-lg">Contact</h3>
+                      <div className="bg-muted p-3 rounded-md space-y-1">
+                        <div>
+                          <span className="font-medium">Name:</span> {crmEntry.contact.name}
                         </div>
-                      ))}
+                        <div>
+                          <span className="font-medium">Email:</span> {crmEntry.contact.email}
+                        </div>
+                        <div>
+                          <span className="font-medium">Phone:</span> {crmEntry.contact.phone}
+                        </div>
+                        <div>
+                          <span className="font-medium">Company:</span> {crmEntry.contact.company}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Deal */}
+                    <div className="space-y-2">
+                      <h3 className="font-semibold text-lg">Deal</h3>
+                      <div className="bg-muted p-3 rounded-md space-y-1">
+                        <div>
+                          <span className="font-medium">Title:</span> {crmEntry.opportunity.title}
+                        </div>
+                        <div>
+                          <span className="font-medium">Value:</span> {crmEntry.opportunity.value}
+                        </div>
+                        <div>
+                          <span className="font-medium">Stage:</span> {crmEntry.opportunity.stage}
+                        </div>
+                        <div>
+                          <span className="font-medium">Close Date:</span> {crmEntry.opportunity.close_date}
+                        </div>
+                        <div>
+                          <span className="font-medium">Description:</span> {crmEntry.opportunity.description}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Activities */}
+                    <div className="space-y-2">
+                      <h3 className="font-semibold text-lg">Activities</h3>
+                      <div className="space-y-2">
+                        {crmEntry.activities.map((activity, index) => (
+                          <div key={index} className="bg-muted p-3 rounded-md">
+                            <div className="flex justify-between items-start mb-1">
+                              <Badge variant="outline">{activity.type}</Badge>
+                              <span className="text-sm text-muted-foreground">{activity.date}</span>
+                            </div>
+                            <div className="text-sm">{activity.description}</div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

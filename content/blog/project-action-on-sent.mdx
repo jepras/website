@@ -1,0 +1,140 @@
+---
+title: "Project: Action on Sent"
+date: "2025-12-07"
+description: "Writeup of 'Action on Sent' - a project automating actions every time an email is sent"
+tags: ["ai-agents", "python", "automations"]
+category: "Project"
+---
+
+<BlogIntro
+  title="Project: Action on Sent"
+  description="Writeup of 'Action on Sent' - a project automating actions every time an email is sent"
+  readTime="5 min"
+  author="Jeppe Rasmussen"
+  tags={["ai-agents", "python", "automations"]}
+  date="2025-12-07"
+  variant="featured"
+/>
+
+*Press send. Do the associated task. Send another email. Do the associated task.
+.. And often the task is defined directly in the sent email* 🤦‍♂️
+
+One busy director, in need of more hours in the day, was tired by this loop. They wanted to save the time and the mental energy drained by doing follow up tasks after emails were sent. It felt inefficient to do this menial grunt work again and again. 
+
+With the unstructured & varying data in emails, then this couldn't be done with regular automations. So we decided to create an AI Agent system that could relieve him of one of these mundane tasks, and then expand to more workflows later.
+
+This is a writeup of "Action on Sent".
+
+<HoverCard 
+  trigger="> Hover for background about me if you think that is important" 
+  triggerClassName="text-muted text-sm"
+
+>
+  <div className="space-y-2">
+    <h4 className="font-semibold text-foreground !mt-0">Jeppe Rasmussen</h4>
+    <p className="text-sm text-muted-foreground">
+      Technology passionate, but not an engineer by education. I worked previously at Microsoft as a project manager I started learning to program the 2017 way 8 years ago, but then got away from programming the last 6 years as i founded the IoT company, Tector. I made the first proof of concept until we got a CTO. I was always heavily involved in product development, but not actively developing the product. 
+    </p>
+    <p className="text-sm text-muted-foreground">
+        Now I’m back trying to refine my technical skills by learning how to create AI systems and reflecting a ton on how one needs to learn to program in 2025.
+    </p>
+    
+  </div>
+</HoverCard> 
+<br />
+<HoverCard 
+  trigger="> Hover if you are a senior dev" 
+  triggerClassName="text-muted-foreground text-sm"
+
+>
+  <div className="space-y-2">
+    <h4 className="font-semibold text-foreground !mt-0">Thank you for reading</h4>
+    <p className="text-sm text-muted-foreground">
+      If you are a senior developer, then you’ll probably laugh at many of my decisions and learnings. Feel free to do that, or instead you can read this piece to understand what goes on inside the mind of a rookie AI assisted developer. 
+    </p>
+    <p className="text-sm text-muted-foreground">
+     I strongly believe that I am learning so much faster than when I learned to program 8 years ago. I am not spending months getting a basic frontend to-do list app made that no one will use. I’m actually creating systems that people are using and learning quickly when taking the wrong decisions. 
+    </p>
+    
+  </div>
+</HoverCard> 
+
+<br /><br />
+<Separator />
+
+## Description
+The system serves as a bridge between email communications and CRM management, automating the process of capturing sales opportunities in the CRM. 
+
+It addresses the common business challenge of ensuring that potential sales leads from email communications are properly tracked in a CRM system without requiring manual data entry.
+
+It works in the following way:
+
+1. The AI Orchestrator is pinged when an email webhook triggers.
+2. The Analysis AI analyses the text and decides whether it’s a sales deal.
+3. The CRM AI looks for duplicates in the CRM and creates necessary deal and objects.
+4. The Logging AI logs the outcome of the other AI’s for transparency & future improvements.
+
+<AnimatedSystemDiagram />
+### Why the use of an AI Agent flow for this instead of Zapier/Make?
+
+The email analyser makes text analysis hassle free. Deciding whether something is a potential deal = easy.
+
+```
+Show example of emails that are deals versus those that aren’t. 
+```
+
+The AI Agent can extract context from the entire email chain and fill out fields as needed and fill in empty values when none is found.
+
+Having worked with CRM automation before, it is a hassle to work with missing fields, missing context from long conversations, etc. An automation that creates objects wrongfully and has to be changed destroys the whole purpose of it.
+
+An AI can do this job much better.
+
+<EmailExtractionDiagram />
+
+The AI analyses the sent email. Understands that it is an offer. Also extracts Bob’s full name and organisation from the email as it decides his email address doesn’t give the right info. It also extracts a short summary from the full email chain. And it extracts that the next step is for Hans to get back.
+
+This can easily be extracted to some structured output and is then easy to use to check for duplicates, both strict and fuzzy logic. 
+
+The CRM agent then sees the contact email doesn’t exists, so it creates it. The organisation does exist though, so it connects the new contact with the organisation. The contact doesn’t have any pre existing deals, so a new one is created with the right name, organisation, an email chain summary in the notes and follow up task for Bob to follow up in 2 days as Hans wants to get this done before next week.
+
+<EmailToCrmPipeline />
+
+This system could have been done with just 1 agent, but giving each agent different context increases the likelihood of correct outcomes. It might have been overkill for this project, but we wanted to make the project future proof and ready to automate more automations from emails in the future.
+
+<Separator />
+
+The rest of this write up is for different audiences.. so click below if you: 
+- want to read more about the technical considerations
+- are curious about my learnings (mostly related to how to work with LLMs)
+- think that there must be some bigger potential with this application?
+
+<Separator />
+
+## Tech stack
+*You can skim an accurate & extensive, though not that interesting nor filtered, description of all the technical aspects of the project in this [deepwiki here](https://deepwiki.com/jepras/supa-vercel-infra).*
+
+My own aim with this project was to learn how to build a production ready AI Agent system using LLMs. There are a few steps in that:
+
+1. Figuring out the system architecture
+2. Figuring out what deployment providers to use
+3. Decide where on the scale of locally ready to enterprise ready the system should be
+4. Figuring out what LLM to use
+
+<TechStackBento 
+  items={[
+    { name: 'Next.js', icon: 'nextjs', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
+    { name: 'TypeScript', icon: 'typescript', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
+    { name: 'Shadcn', icon: '🎨', iconType: 'emoji', colSpan: 1, rowSpan: 1 },
+    { name: 'Tailwind', icon: 'tailwindcss', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
+    { name: 'Python', icon: 'python', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
+    { name: 'FastAPI', icon: 'fastapi', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
+    { name: 'Supabase', icon: 'supabase', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
+    { name: 'OpenRouter', icon: 'https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/openrouter-text.png', iconType: 'url', colSpan: 1, rowSpan: 1 },
+    { name: 'Vercel', icon: 'vercel', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
+    { name: 'Docker', icon: 'docker', iconType: 'devicon', colSpan: 2, rowSpan: 1 },
+    { name: 'Railway', icon: '🚂', iconType: 'emoji', colSpan: 1, rowSpan: 1 },
+    { name: 'Pipedrive', icon: 'https://1000logos.net/wp-content/uploads/2020/09/Pipedrive-Logo.png', iconType: 'url', colSpan: 2, rowSpan: 1 },
+    { name: 'Outlook', icon: '📧', iconType: 'emoji', colSpan: 2, rowSpan: 1 },
+  ]} 
+  columns={4} 
+/>

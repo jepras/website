@@ -9,7 +9,7 @@ interface ProseProps extends React.HTMLAttributes<HTMLElement> {
 const Prose = React.forwardRef<HTMLElement, ProseProps>(
   ({ className, as: Component = "article", variant = "default", ...props }, ref) => {
     const proseClasses = variant === "default" 
-      ? "prose prose-lg max-w-none"
+      ? "prose prose-base max-w-none"
       : "";
 
     return React.createElement(Component, {

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Clock, User, Tag } from 'lucide-react';
+import { Clock, User, Tag, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 

@@ -22,7 +22,7 @@ export default function About() {
       {/* Content */}
       <main className="pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="prose prose-lg prose-invert prose-headings:text-white prose-p:text-gray-400 prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-emerald-400 prose-code:bg-gray-900 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800 max-w-none">
+          <div className="prose prose-base prose-invert prose-headings:text-white prose-p:text-gray-400 prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-emerald-400 prose-code:bg-gray-900 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800 max-w-none">
             <p>
               I'm a software engineer with a unique journey that spans from corporate tech to startup 
               entrepreneurship. After several years at Microsoft, I ventured into the startup world as 

@@ -93,8 +93,8 @@ module.exports = {
   		typography: {
   			DEFAULT: {
   				css: {
-  					'--tw-prose-body': 'hsl(var(--foreground))',
-  					'--tw-prose-headings': 'hsl(var(--foreground))',
+  										'--tw-prose-body': 'hsl(var(--muted-foreground))',
+					'--tw-prose-headings': 'hsl(var(--foreground))',
   					'--tw-prose-links': 'hsl(var(--primary))',
   					'--tw-prose-bold': 'hsl(var(--foreground))',
   					'--tw-prose-counters': 'hsl(var(--muted-foreground))',
@@ -109,8 +109,8 @@ module.exports = {
   					'--tw-prose-pre-border': 'hsl(var(--border))',
   					'--tw-prose-th-borders': 'hsl(var(--border))',
   					'--tw-prose-td-borders': 'hsl(var(--border))',
-  					'--tw-prose-invert-body': 'hsl(var(--foreground))',
-  					'--tw-prose-invert-headings': 'hsl(var(--foreground))',
+  										'--tw-prose-invert-body': 'hsl(var(--muted-foreground))',
+					'--tw-prose-invert-headings': 'hsl(var(--foreground))',
   					'--tw-prose-invert-links': 'hsl(var(--primary))',
   					'--tw-prose-invert-bold': 'hsl(var(--foreground))',
   					'--tw-prose-invert-counters': 'hsl(var(--muted-foreground))',
