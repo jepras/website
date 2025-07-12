@@ -26,6 +26,10 @@ In this guide, we'll explore several advanced features you can implement to make
 
 Collapsible sections are perfect for organizing content and reducing visual clutter. Here are some examples:
 
+<EmeraldCard variant="subtle" title="Subtle Variant">
+  This is the subtle variant for less prominent content.
+</EmeraldCard>
+
 ## ShadCN Accordion Example
 
 Here's a ShadCN accordion component using our emerald theme colors:
@@ -119,6 +123,57 @@ Accent subheaders use your brand colors to create visual hierarchy.
 <Subheader level={4} variant="subtle">Subtle Subheader</Subheader>
 
 Subtle subheaders are perfect for less important sections that still need structure.
+
+## Code Blocks
+
+There are several ways to include code blocks in your MDX content:
+
+### 1. Native MDX Code Blocks
+
+You can use standard markdown code blocks with syntax highlighting:
+
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+```
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+```
+
+### 2. Enhanced Code Block Component
+
+For more advanced features, you can use the custom CodeBlock component:
+
+<CodeBlock 
+  title="React Component Example" 
+  language="jsx"
+  showLineNumbers={true}
+>
+{`import React from 'react';
+
+function MyComponent({ title, children }) {
+  return (
+    <div className="card">
+      <h2>{title}</h2>
+      {children}
+    </div>
+  );
+}
+
+export default MyComponent;`}
+</CodeBlock>
+
+### 3. Inline Code
+
+Use the InlineCode component for highlighting code within text:
+
+You can use <InlineCode>useState</InlineCode> and <InlineCode>useEffect</InlineCode> hooks in your React components. The <InlineCode>className</InlineCode> prop accepts Tailwind CSS classes.
 
 ## Interactive Components
 

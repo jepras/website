@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -37,7 +38,8 @@ export default function CollapsibleSection({
         "overflow-hidden transition-all duration-200 ease-in-out",
         isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
       )}>
-        <div className="px-4 py-3 bg-gray-900/30 border-t border-gray-700">
+        <Separator className="bg-gray-700" />
+        <div className="px-4 py-3 bg-gray-900/30">
           {children}
         </div>
       </div>

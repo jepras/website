@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Prose } from '@/components/ui/prose';
+import { Separator } from '@/components/ui/separator';
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -62,7 +63,8 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
           <PostContentClient content={postData.content} category={postData.category} />
           
           {/* Back to blog link */}
-          <div className="mt-12 pt-8 border-t border-gray-800">
+          <div className="mt-12">
+            <Separator className="mb-8" />
             <Link 
               href="/blog"
               className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
