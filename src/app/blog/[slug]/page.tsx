@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Prose } from '@/components/ui/prose';
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -16,9 +17,9 @@ export async function generateStaticParams() {
 // This will be a Client Component to render the post content
 function PostContentClient({ content, category }: { content: React.ReactNode; category?: string }) {
   return (
-    <article className="prose prose-lg prose-invert prose-headings:text-white prose-p:text-gray-400 prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-emerald-400 prose-code:bg-gray-900 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800 max-w-none">
+    <Prose>
       {content}
-    </article>
+    </Prose>
   );
 }
 

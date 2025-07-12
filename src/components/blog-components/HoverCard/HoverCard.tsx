@@ -1,7 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Prose } from '@/components/ui/prose';
 
 interface BlogHoverCardProps {
   trigger: React.ReactNode;
@@ -16,31 +18,18 @@ export default function BlogHoverCard({
   className,
   triggerClassName 
 }: BlogHoverCardProps) {
-  const [isVisible, setIsVisible] = useState(false);
-
   return (
-    <div 
-      className="relative inline-block"
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
-    >
-      <div className={cn("inline-block cursor-help", triggerClassName)}>
-        {trigger}
-      </div>
-      
-      {isVisible && (
-        <div 
-          className={cn(
-            "absolute z-50 w-80 bg-gray-900 border border-gray-700 text-white p-4 rounded-lg shadow-lg",
-            "top-full left-1/2 transform -translate-x-1/2 mt-2",
-            "before:content-[''] before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1",
-            "before:w-0 before:h-0 before:border-l-4 before:border-r-4 before:border-b-4 before:border-transparent before:border-b-gray-700",
-            className
-          )}
-        >
-          {children}
+    <HoverCard>
+      <HoverCardTrigger asChild>
+        <div className={cn("inline-block cursor-help", triggerClassName)}>
+          {trigger}
         </div>
-      )}
-    </div>
+      </HoverCardTrigger>
+      <HoverCardContent className={cn("w-80", className)}>
+        <Prose className="prose-h4:mt-0 prose-h4:mb-0 prose-*:last:mb-0">
+          {children}
+        </Prose>
+      </HoverCardContent>
+    </HoverCard>
   );
 } 

@@ -11,4 +11,25 @@ This is a minimal test.
 
 <CalloutBox type="info" title="Test">
   This is a test.
-</CalloutBox> 
+</CalloutBox>
+
+## HoverCard Example
+
+Here's an example of the HoverCard component. Try hovering over the <HoverCard trigger="highlighted text">This is the trigger text that you hover over to see the card content. You can put any React elements here as the trigger.</HoverCard> to see the hover card in action.
+
+You can also use it with different content:
+
+<HoverCard 
+  trigger="technical term" 
+  triggerClassName="text-primary font-semibold"
+>
+  <div className="space-y-2">
+    <h4 className="font-semibold text-foreground !mt-0">Technical Definition</h4>
+    <p className="text-sm text-muted-foreground">
+      This is a detailed explanation of the technical term that appears when you hover over the trigger text.
+    </p>
+    <div className="text-xs text-muted-foreground">
+      <strong>Usage:</strong> Commonly used in software development contexts.
+    </div>
+  </div>
+</HoverCard> 

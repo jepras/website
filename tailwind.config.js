@@ -89,7 +89,45 @@ module.exports = {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+  		typography: {
+  			DEFAULT: {
+  				css: {
+  					'--tw-prose-body': 'hsl(var(--foreground))',
+  					'--tw-prose-headings': 'hsl(var(--foreground))',
+  					'--tw-prose-links': 'hsl(var(--primary))',
+  					'--tw-prose-bold': 'hsl(var(--foreground))',
+  					'--tw-prose-counters': 'hsl(var(--muted-foreground))',
+  					'--tw-prose-bullets': 'hsl(var(--muted-foreground))',
+  					'--tw-prose-hr': 'hsl(var(--border))',
+  					'--tw-prose-quotes': 'hsl(var(--foreground))',
+  					'--tw-prose-quote-borders': 'hsl(var(--border))',
+  					'--tw-prose-captions': 'hsl(var(--muted-foreground))',
+  					'--tw-prose-code': 'hsl(var(--primary))',
+  					'--tw-prose-pre-code': 'hsl(var(--foreground))',
+  					'--tw-prose-pre-bg': 'hsl(var(--muted))',
+  					'--tw-prose-pre-border': 'hsl(var(--border))',
+  					'--tw-prose-th-borders': 'hsl(var(--border))',
+  					'--tw-prose-td-borders': 'hsl(var(--border))',
+  					'--tw-prose-invert-body': 'hsl(var(--foreground))',
+  					'--tw-prose-invert-headings': 'hsl(var(--foreground))',
+  					'--tw-prose-invert-links': 'hsl(var(--primary))',
+  					'--tw-prose-invert-bold': 'hsl(var(--foreground))',
+  					'--tw-prose-invert-counters': 'hsl(var(--muted-foreground))',
+  					'--tw-prose-invert-bullets': 'hsl(var(--muted-foreground))',
+  					'--tw-prose-invert-hr': 'hsl(var(--border))',
+  					'--tw-prose-invert-quotes': 'hsl(var(--foreground))',
+  					'--tw-prose-invert-quote-borders': 'hsl(var(--border))',
+  					'--tw-prose-invert-captions': 'hsl(var(--muted-foreground))',
+  					'--tw-prose-invert-code': 'hsl(var(--primary))',
+  					'--tw-prose-invert-pre-code': 'hsl(var(--foreground))',
+  					'--tw-prose-invert-pre-bg': 'hsl(var(--muted))',
+  					'--tw-prose-invert-pre-border': 'hsl(var(--border))',
+  					'--tw-prose-invert-th-borders': 'hsl(var(--border))',
+  					'--tw-prose-invert-td-borders': 'hsl(var(--border))',
+  				},
+  			},
+  		},
   	}
   },
   plugins: [
