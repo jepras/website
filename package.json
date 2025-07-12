@@ -30,6 +30,7 @@
     "devicon-react": "^1.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.525.0",
+    "mermaid": "^11.8.1",
     "next": "^15.0.0",
     "next-mdx-remote": "^5.0.0",
     "react": "^19.1.0",
