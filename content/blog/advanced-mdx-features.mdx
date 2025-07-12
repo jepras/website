@@ -26,6 +26,32 @@ In this guide, we'll explore several advanced features you can implement to make
 
 Collapsible sections are perfect for organizing content and reducing visual clutter. Here are some examples:
 
+## ShadCN Accordion Example
+
+Here's a ShadCN accordion component using our emerald theme colors:
+
+<Accordion 
+  items={[
+    {
+      title: "What is MDX?",
+      content: "MDX is a format that lets you write JSX in your markdown documents. It combines the simplicity of Markdown with the power of React components, allowing you to create rich, interactive content."
+    },
+    {
+      title: "Why use ShadCN?",
+      content: "ShadCN provides beautifully designed, accessible components that work seamlessly together. They're built on top of Radix UI primitives and styled with Tailwind CSS."
+    },
+    {
+      title: "Theme Integration",
+      content: "Our accordion automatically uses our emerald theme colors - the borders, backgrounds, and hover states all match our design system."
+    }
+  ]}
+  defaultValue="item-0"
+/>
+
+## Custom Collapsible Sections
+
+You can also use custom collapsible sections for more specific styling:
+
 <CollapsibleSection title="What is MDX?" defaultOpen={true}>
   MDX is a format that lets you write JSX in your markdown documents. It combines the simplicity of Markdown with the power of React components, allowing you to create rich, interactive content.
   
