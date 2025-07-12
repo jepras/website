@@ -22,8 +22,9 @@ function PostContentClient({ content, category }: { content: React.ReactNode; ca
 }
 
 // This will be a Server Component to fetch the post data
-export default async function Post({ params }: { params: { slug: string } }) {
-  const postData = await getPostData(params.slug);
+export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const postData = await getPostData(slug);
 
   return (
     <div className="min-h-screen bg-black">
