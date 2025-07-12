@@ -39,7 +39,7 @@ export default function TechStackBento({
     if (!iconType) {
       if (typeof icon === 'string') {
         if (icon.startsWith('http')) {
-          return <img src={icon} alt={item.name} className={iconSize} />;
+          return <img src={icon} alt={item.name} className={cn(iconSize, "object-contain")} />;
         } else if (icon.startsWith('<svg')) {
           return <div className={iconSize} dangerouslySetInnerHTML={{ __html: icon }} />;
         } else if (icon.length <= 2) {
@@ -64,7 +64,7 @@ export default function TechStackBento({
       case 'emoji':
         return <span className={cn(iconSize, "flex items-center justify-center text-4xl")}>{icon as string}</span>;
       case 'url':
-        return <img src={icon as string} alt={item.name} className={iconSize} />;
+        return <img src={icon as string} alt={item.name} className={cn(iconSize, "object-contain")} />;
       case 'svg':
         return <div className={iconSize} dangerouslySetInnerHTML={{ __html: icon as string }} />;
       case 'devicon':
