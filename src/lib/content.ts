@@ -2,9 +2,46 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { compileMDX } from 'next-mdx-remote/rsc';
-import { getBlogComponents } from './blog-components';
 
 const postsDirectory = path.join(process.cwd(), 'content/blog');
+
+// Function to automatically import all blog components
+async function getBlogComponents() {
+  const componentsDir = path.join(process.cwd(), 'src/components/blog-components');
+  const components: Record<string, any> = {};
+
+  try {
+    // Read all directories in the blog-components folder
+    const componentFolders = fs.readdirSync(componentsDir, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
+      .map(dirent => dirent.name);
+
+    // Import each component
+    for (const folderName of componentFolders) {
+      try {
+        // Import the component from its index file
+        const componentModule = await import(`@/components/blog-components/${folderName}`);
+        const Component = componentModule.default;
+        
+        if (Component) {
+          // Use the folder name as the component name (PascalCase)
+          const componentName = folderName
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join('');
+          
+          components[componentName] = Component;
+        }
+      } catch (error) {
+        console.warn(`Failed to import component from ${folderName}:`, error);
+      }
+    }
+  } catch (error) {
+    console.warn('Failed to read blog-components directory:', error);
+  }
+
+  return components;
+}
 
 export function getSortedPostsData() {
   // Get file names under /posts
@@ -63,7 +100,7 @@ export async function getPostData(id: string) {
     options: {
       parseFrontmatter: true,
     },
-    components: blogComponents,
+    components: blogComponents
   });
 
   return {

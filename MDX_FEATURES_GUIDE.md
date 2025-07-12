@@ -89,26 +89,6 @@ This guide explains how to implement and use advanced MDX features in your blog 
 - `children` (ReactNode): Content of the callout
 - `className` (string): Additional CSS classes
 
-### 4. TableOfContents
-**Purpose**: Auto-generated navigation from headings
-
-**Usage in MDX**:
-```mdx
-<TableOfContents 
-  headings={[
-    { id: "introduction", text: "Introduction", level: 2 },
-    { id: "getting-started", text: "Getting Started", level: 2 },
-    { id: "advanced-features", text: "Advanced Features", level: 2 },
-    { id: "conclusion", text: "Conclusion", level: 2 }
-  ]}
-  title="Table of Contents"
-/>
-```
-
-**Props**:
-- `headings` (array): Array of heading objects with id, text, and level
-- `title` (string): Title for the TOC (default: "Table of Contents")
-- `className` (string): Additional CSS classes
 
 ### 5. BlogIntro
 **Purpose**: Create engaging blog post introductions
@@ -216,12 +196,6 @@ tags: ["tag1", "tag2"]
 
 ## Introduction
 
-<TableOfContents 
-  headings={[
-    { id: "intro", text: "Introduction", level: 2 },
-    { id: "main", text: "Main Content", level: 2 }
-  ]}
-/>
 
 ## Main Content
 
