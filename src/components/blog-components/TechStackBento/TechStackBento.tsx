@@ -157,7 +157,7 @@ export default function TechStackBento({
   // Default grid layout
   return (
     <div className={cn(
-      "grid gap-4 grid-flow-row",
+      "grid gap-4 grid-flow-row auto-rows-min",
       getGridCols(columns),
       className
     )}>
@@ -166,7 +166,7 @@ export default function TechStackBento({
           key={index}
           className={cn(
             getItemSpan(item.colSpan, item.rowSpan, columns),
-            "border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors overflow-hidden",
+            "border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors overflow-hidden max-h-32",
             itemClassName
           )}
         >
