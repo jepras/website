@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import React from 'react';
+import { Badge } from '@/components/ui/badge';
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -36,9 +37,9 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
           {/* Category */}
           {postData.category && (
             <div className="flex items-center space-x-2 mb-4">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">
+              <Badge>
                 {postData.category}
-              </span>
+              </Badge>
             </div>
           )}
           

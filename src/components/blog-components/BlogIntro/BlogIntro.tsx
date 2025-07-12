@@ -3,6 +3,7 @@
 import React from 'react';
 import { Clock, User, Tag } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 interface BlogIntroProps {
   title: string;
@@ -81,12 +82,9 @@ export default function BlogIntro({
             <Tag className="w-4 h-4 text-gray-400" />
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-1 text-xs font-medium bg-primary/20 text-primary rounded-full border border-primary/30"
-                >
+                <Badge key={tag}>
                   {tag}
-                </span>
+                </Badge>
               ))}
             </div>
           </div>
