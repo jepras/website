@@ -4,6 +4,7 @@ import React from 'react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 // import { getSortedPostsData } from "@/lib/content"; // We won't fetch posts directly on the homepage for now
 
 export default function Home() {
@@ -25,19 +26,16 @@ export default function Home() {
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-8">
             Ex-microsoft, ex-founder exploring new technical avenues
           </p>
-          <div className="flex justify-center space-x-4">
-            <Link 
-              href="/blog" 
-              className="inline-flex items-center px-6 py-3 border border-primary/20 text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
-            >
-              Projects
-            </Link>
-            <Link 
-              href="/about" 
-              className="inline-flex items-center px-6 py-3 border border-border text-muted-foreground bg-muted rounded-lg hover:bg-muted/80 transition-colors"
-            >
-              About
-            </Link>
+          
+          
+          {/* ShadCN Button Comparison */}
+          <div className="flex justify-center space-x-4 mt-8">
+            <Button asChild size="lg">
+              <Link href="/blog">Projects</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/about">About</Link>
+            </Button>
           </div>
         </div>
       </section>
