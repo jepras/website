@@ -27,7 +27,7 @@ export default function BlogIntro({
 }: BlogIntroProps) {
   const variants = {
     default: "bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700",
-    featured: "bg-gradient-to-br from-emerald-900/20 to-blue-900/20 border border-emerald-500/20",
+    featured: "bg-gradient-to-br from-primary/20 to-blue-900/20 border border-primary/20",
     minimal: "bg-gray-900/30 border border-gray-700/50"
   };
 
@@ -83,7 +83,7 @@ export default function BlogIntro({
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-1 text-xs font-medium bg-emerald-500/20 text-emerald-300 rounded-full border border-emerald-500/30"
+                  className="px-2 py-1 text-xs font-medium bg-primary/20 text-primary rounded-full border border-primary/30"
                 >
                   {tag}
                 </span>

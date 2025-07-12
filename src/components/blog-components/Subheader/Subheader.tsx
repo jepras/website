@@ -30,10 +30,10 @@ export default function Subheader({
   };
 
   const variants = {
-    default: "text-white",
-    accent: "text-emerald-400",
-    subtle: "text-gray-300",
-    gradient: "bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent"
+          default: "text-foreground",
+    accent: "text-primary",
+          subtle: "text-muted-foreground",
+          gradient: "bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent"
   };
 
   const Component = `h${level}` as keyof React.JSX.IntrinsicElements;

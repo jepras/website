@@ -27,7 +27,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
   const postData = await getPostData(slug);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section */}
@@ -36,19 +36,19 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
           {/* Category */}
           {postData.category && (
             <div className="flex items-center space-x-2 mb-4">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-500/20">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">
                 {postData.category}
               </span>
             </div>
           )}
           
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
             {postData.title}
           </h1>
           
           {/* Date */}
-          <p className="text-gray-400 mb-8">
+          <p className="text-muted-foreground mb-8">
             {postData.date}
           </p>
         </div>
@@ -63,7 +63,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
           <div className="mt-12 pt-8 border-t border-gray-800">
             <Link 
               href="/blog"
-              className="inline-flex items-center text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
             >
               <svg className="mr-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
