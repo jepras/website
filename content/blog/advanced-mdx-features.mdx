@@ -1,0 +1,155 @@
+---
+title: "Advanced MDX Features for Engaging Blog Posts"
+date: "2024-01-15"
+description: "Learn how to create engaging blog posts with interactive components, collapsible sections, hover cards, and more using MDX and ShadCN."
+tags: ["mdx", "react", "blog", "components", "tutorial"]
+category: "Tutorial"
+---
+
+<BlogIntro
+  title="Advanced MDX Features for Engaging Blog Posts"
+  description="Discover how to transform your blog posts with interactive components, collapsible sections, hover cards, and more using MDX and ShadCN UI components."
+  readTime="8 min"
+  author="Your Name"
+  tags={["mdx", "react", "blog", "components", "tutorial"]}
+  date="2024-01-15"
+  variant="featured"
+/>
+
+## Introduction
+
+MDX (Markdown + JSX) is a powerful format that allows you to write content in Markdown while seamlessly integrating React components. This opens up endless possibilities for creating engaging, interactive blog posts.
+
+In this guide, we'll explore several advanced features you can implement to make your blog posts more engaging and interactive.
+
+## Table of Contents
+
+<TableOfContents
+  headings={[
+    { id: "introduction", text: "Introduction", level: 2 },
+    { id: "toggle-lists", text: "Toggle Lists", level: 2 },
+    { id: "hover-cards", text: "Hover Cards", level: 2 },
+    { id: "callout-boxes", text: "Callout Boxes", level: 2 },
+    { id: "subheaders", text: "Styled Subheaders", level: 2 },
+    { id: "conclusion", text: "Conclusion", level: 2 }
+  ]}
+/>
+
+## Toggle Lists
+
+Collapsible sections are perfect for organizing content and reducing visual clutter. Here are some examples:
+
+<CollapsibleSection title="What is MDX?" defaultOpen={true}>
+  MDX is a format that lets you write JSX in your markdown documents. It combines the simplicity of Markdown with the power of React components, allowing you to create rich, interactive content.
+  
+  **Key benefits:**
+  - Write content in familiar Markdown syntax
+  - Embed interactive React components
+  - Maintain clean, readable content
+  - Enable rich user interactions
+</CollapsibleSection>
+
+<CollapsibleSection title="Advanced Features">
+  <Subheader level={3} variant="accent">Component Integration</Subheader>
+  
+  You can embed any React component directly in your MDX content:
+  
+  ```jsx
+  <MyCustomComponent 
+    title="Interactive Chart"
+    data={[1, 2, 3, 4, 5]}
+  />
+  ```
+  
+  <CalloutBox type="info" title="Pro Tip">
+    Components can accept props, making them highly customizable for different use cases.
+  </CalloutBox>
+</CollapsibleSection>
+
+<CollapsibleSection title="Implementation Details">
+  The collapsible sections are built using React state management and CSS transitions for smooth animations. They're fully accessible and work with keyboard navigation.
+</CollapsibleSection>
+
+
+## Callout Boxes
+
+Callout boxes help highlight important information, tips, warnings, and notes:
+
+<CalloutBox type="info" title="Information">
+  This is an informational callout box. Use it to provide additional context or background information that's helpful but not critical to understanding the main content.
+</CalloutBox>
+
+<CalloutBox type="warning" title="Important Note">
+  This is a warning callout box. Use it to highlight potential issues, gotchas, or important considerations that readers should be aware of.
+</CalloutBox>
+
+<CalloutBox type="success" title="Success">
+  This is a success callout box. Use it to highlight positive outcomes, achievements, or confirmations.
+</CalloutBox>
+
+<CalloutBox type="error" title="Error">
+  This is an error callout box. Use it to highlight critical issues, failures, or problems that need immediate attention.
+</CalloutBox>
+
+## Styled Subheaders
+
+You can create visually distinct subheaders with different styles:
+
+<Subheader level={2} variant="gradient">Gradient Subheader</Subheader>
+
+This creates a beautiful gradient effect that draws attention to important sections.
+
+<Subheader level={3} variant="accent">Accent Subheader</Subheader>
+
+Accent subheaders use your brand colors to create visual hierarchy.
+
+<Subheader level={4} variant="subtle">Subtle Subheader</Subheader>
+
+Subtle subheaders are perfect for less important sections that still need structure.
+
+## Interactive Components
+
+You can embed any of your existing interactive components:
+
+
+
+<EmailExtractionDiagram />
+
+<EmailToCrmPipeline />
+
+<InteractiveChart title="Sample Data Visualization" data={[15, 25, 35, 45, 55]} />
+
+## Best Practices
+
+<CollapsibleSection title="Content Organization">
+  <Subheader level={3} variant="accent">Structure Your Content</Subheader>
+  
+  - Use collapsible sections for detailed explanations
+  - Implement hover cards for contextual information
+  - Use callout boxes to highlight important points
+  - Create visual hierarchy with styled subheaders
+  
+  <CalloutBox type="info" title="Pro Tip">
+    Don't overuse interactive elements. They should enhance the content, not distract from it.
+  </CalloutBox>
+</CollapsibleSection>
+
+<CollapsibleSection title="Performance Considerations">
+  <Subheader level={3} variant="accent">Optimize for Performance</Subheader>
+  
+  - Lazy load heavy components
+  - Use proper image optimization
+  - Implement code splitting for large components
+  - Consider the impact on Core Web Vitals
+</CollapsibleSection>
+
+## Conclusion
+
+MDX with custom components opens up a world of possibilities for creating engaging, interactive blog content. By combining the simplicity of Markdown with the power of React components, you can create rich, dynamic experiences that keep your readers engaged.
+
+<CalloutBox type="success" title="Next Steps">
+  Start by implementing these components in your blog posts. Experiment with different combinations and find what works best for your content and audience.
+</CalloutBox>
+
+Remember, the goal is to enhance the reading experience, not to overwhelm it. Use these features thoughtfully and always prioritize content quality over flashy interactions. 
+
