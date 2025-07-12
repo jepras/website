@@ -32,8 +32,8 @@ export default function TechStackBento({
   const renderIcon = (item: TechStackItem) => {
     const { icon, iconType } = item;
     
-    // Simple sizing that should work for all icon types
-    const iconSize = 'w-10 h-10';
+    // Dynamic sizing with constraints: max 80% width, max 50% height, min 40px
+    const iconSize = 'min-w-10 min-h-10 max-w-[80%] max-h-[50%] w-auto h-auto';
     
     // Auto-detect icon type if not specified
     if (!iconType) {
@@ -157,7 +157,7 @@ export default function TechStackBento({
   // Default grid layout
   return (
     <div className={cn(
-      "grid gap-4 auto-rows-fr",
+      "grid gap-4 grid-flow-row",
       getGridCols(columns),
       className
     )}>
@@ -169,10 +169,6 @@ export default function TechStackBento({
             "border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors overflow-hidden",
             itemClassName
           )}
-          style={{
-            gridColumn: `span ${Math.min(item.colSpan || 1, columns)}`,
-            gridRow: `span ${item.rowSpan || 1}`
-          }}
         >
           <CardContent className={cn("flex flex-col items-center justify-center text-center h-full", getItemStyles(item.colSpan, item.rowSpan))}>
             <div className="flex-1 flex items-center justify-center min-h-0">
