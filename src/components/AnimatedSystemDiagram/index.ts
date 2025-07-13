@@ -1,1 +1,1 @@
-export { default } from './AnimatedSystemDiagram'; 
+export { default } from '../blog-components/AnimatedSystemDiagram'; 

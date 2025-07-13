@@ -9,7 +9,7 @@ category: "Project"
 <BlogIntro
   title="Project: Action on Sent"
   description="Writeup of 'Action on Sent' - a project automating actions every time an email is sent"
-  readTime="It's really fucking long, sorry. Probably a multiple hour"
+  readTime="It's waaay too long, sorry. Kudos to you if you can keep your focus"
   author="Jeppe Rasmussen"
   tags={["ai-agents", "python", "automations"]}
   date="2025-12-07"
@@ -22,8 +22,6 @@ category: "Project"
 One busy director, in need of more hours in the day, was tired by this loop. They wanted to save the time and the mental energy drained by doing follow up tasks after emails were sent. It felt inefficient to do this menial grunt work again and again. 
 
 With the unstructured & varying data in emails, then this couldn't be done with regular automations. So we decided to create an AI Agent system that could relieve him of one of these mundane tasks, and then expand to more workflows later.
-
-This is a writeup of "Action on Sent".
 
 <HoverCard 
   trigger="> Hover for background about me if you think that is important" 
@@ -107,11 +105,11 @@ This system could have been done with just 1 agent, but giving each agent differ
 <Separator />
 
 
+
 The rest of this write up is for different audiences.. so click below if you: 
-- want to read more about the technical considerations
+- want to read more about the technical considerations ([jump to tech stack ↓](## Tech stack)
 - are curious about my learnings (mostly related to how to work with LLMs)
 - think that there must be some bigger potential with this application?
-
 <Separator />
 
 ## Tech stack
@@ -450,7 +448,7 @@ And now i have good a modern tech stack & deployment flow that i am comfortable 
     - I told the AI tests it’s own implementation with small commands (preferably first) and then scripts.
     - I always went through the pre deployment steps of building the Dockerfiles before merging back into
 
-#### My workflow
+### My workflow
 
 At the start of the project I had a `PROJECT_OVERVIEW.md` file and a `TASKS.md` file. These gave the overall specifications and guidelines for the project. The task file is not a complete step by step file, but overall directions.  
 
@@ -458,7 +456,7 @@ Then when starting on a new area or new feature I’d often open Claude & Google
 
 Using that workflow I ensured Cursor always knew the overall direction, and when getting to a new phase then we would inject the task list with more specific guidance. 
 
-### **Complications**
+### Complications
 
 Cursor is great at just doing. [The prompt running their system is designed for that.](https://github.com/jujumilk3/leaked-system-prompts/blob/main/cursor-ide-sonnet_20241224.md) This works great when you don’t have any real requirements to the feature and just want an outcome.
 
@@ -478,6 +476,102 @@ Also be aware of the AI using random library versions. I’d push it to mostly u
 
 **Don’t be afraid of stopping the Agent mid execution or writing wait in the chat to stop it.**
 
+### Other small ideas and common best practices
+
+- Implement a design system as one of the first things.
+- Start a new chat often. If a feature emerges into something new, then ask the AI to summarise the context.
+- Keep a `WORKLOG.md` file where you note down your own learnings and reminders for things you have skipped now but want to refine/add later.
+- Refine your project_overview.md & tasks.md files as you go along in the project.
+- Continuously refine your cursorrules. If you see they are not being used, then they are probably too long. Maybe one should divide them up into be more area specific in the future (one for frontend, one for the database, one for API design, etc..). I found that some rules in the [cursor directory](https://cursor.directory/modern-web-development) might be too long.
+- Remember that the AI is biased towards agreeing with you. With that in mind, be very aware of how you write your questions. I have caught myself many times at the end of writing a question laughing at how obvious it is that I really hope for a specific answer.
+    - Instead of: *Is Firebase better for user authentication in our application than Supabase?*
+    - Use neutral questions like: *Evaluate the pros & cons of using Firebase for user authentication vs Supabase.*
+- This is the first project where i added libraries documentation directly into cursor, which seemed to work excellent.
+
+### How to learn from AI assisted development
+
+- Write long ass blog posts for yourself that no one ever will get to the end of, but it feels like the learnings have manifested more thoroughly after this thought process.
+- Ask the AI to explain step by step what happens in the code
+- Ask whether there are other ways to write the same code (with pros & cons). Asking for what the modern way is vs the tested and reliable old way also gives interesting info
+- Ask the AI to generate flow charts or sequence diagrams of how the solution or a specific feature look versus other ways it could look.
+- Ask one AI to criticise another AI’s code.
+- Provide error logs to the AI and asking what they mean instead of just letting it fix it immediately have accelerated my troubleshooting abilities.
+
+.. I’m not doing this as often as I think is good for me at the moment. I get obsessed and advances too quickly sometimes instead of taking time to learn. Maybe that is the best way to keep momentum, but I’m definitely missing out on some ongoing learnings.
+
+### Other learnings
+
+- Running Python code directly as Notebooks within VS Code/Cursor is a treat. Makes it so easy to see test code step by step. It was also essential for this project to refine the AI prompts and CRM duplicate testing quickly. When the code was done in the Python notebook test file, then the AI integrated that flow into the codebase without any errors.
+- I learned to use Ngrok to test webhooks in local development.
+- Learned to work in dev & prod environments. Having a deployment workflow for frontend and backend really helped me understand separations of concern.
+- Getting the AI to optimise the Docker build early was great for quicker production iterations.
+
+### What i need to learn next:
+
+- I want to integrate monitoring from the beginning (maybe OpenTelemetry, Honeycomb, Sentry)
+- Work with +2 dev environments.
+- Work with a database for each environment.
+- Implementing automated database backups & recovery.
+- Caching
+- 100% Infrastructure as Code.
+- How & when to intelligently introduce tests to my development workflow
+- Working with Claude Code
+
+<EmeraldCard variant="default">
+A major thing I have learned from this project is that, even as a rookie AI assisted developer, my intuition is valuable. When I sit with the LLM for hours, guiding it, tweaking it, seeing it run, then I get a good idea of when it is going wrong. Even in areas when I’m not an expert. 
+
+**I can only imagine how powerful this tool is when one is an expert in the given areas**. Then one can steer it in the right direction much better and stop it early when it’s going down a wrong path. 
+
+To me, coding with LLMs is like having a very eager friend who really just wants to code. No matter how minimal the instructions it just wants to code. And I get to sit as the manager that acts both as a systems architect to make the overall technical decisions and a product manager that decides what is important to build next and is responsible for the system working in production. But because my friend is so eager to code and so fast it actually makes sense just to sit and observe what he is doing, while reflecting on ways to improve his output, while discussing with other LLMs about future technical decisions, while creating design component on the side in v0, etc.
+</EmeraldCard> 
+
+*Sidenote 1: I’ve found in my development process that i started talking to the AI as “we” instead of you/i when prompting it. I noticed while writing that I kept writing we. I apparently consider my LLMs and I as a team, so i decided to keep it in. Just so you know I’m not referring to any other people. 
+It’s also scary. This is how i refer to it after playing around with it for 2 months - let’s see how much it’s a part of me after 2 years x(*
+
+*Sidenote 2: While I’m trying to do as much as possible with AI, I still believe making these writeups myself is valuable for me and makes the content more valuable for others. All images & demos are AI generated in v0 though.*
+
 <Separator />
 
 <Subheader level={2} variant="gradient">Potential</Subheader>
+
+### TL;DR 
+
+- Read emails sent → Take action. Actions could be much more than just CRM action. Hook the trigger up to any MCP and let it fly.
+- From reading emails sent to reading emails as they are being written to reading everything the user writes in the browser to reading everything the user writes on their mac.
+- Go from just doing things automatically to propose actions for user acceptance to allowing the user to say “always yes”.
+
+There are many ways this project can expand.
+
+#### Integrate many more workflows
+
+I envision a system where the user just toggles what tools they use for different purposes (notion for documentation, zendesk for customer support, todoist for tasks) and then the system can automate everything that follows an email.
+
+- Update item in Trello based on email
+- Add this to “Team Documentation” in Notion
+- Open a customer support ticket for this in Zendesk
+- Send this to our accounting team on Teams
+- etc, etc.
+
+With the rise of MCPs and the OAuth system in place, integrations can roll out quickly. Defining the workflows and finetuning the prompts is what will make this work. 
+
+#### Feedback integrated
+
+When the AI detects a potential action from an email, then a notification should pop up with the following options:
+
+- Accept action
+- Always accept this type of actions
+- Reject action
+
+When the action is done, then the user should be able to review the workflow and integrate that into the LLMs memory. 
+
+#### Quicker workflows
+
+I envision a natural evolution of this system. Today, the AI Orchestrator decides what action to take based on the email sent. Next step could be:
+
+- The AI analyses your email as you are writing it and proposes the task as you are finishing the email.
+- The AI analyses any text you write in your browser or on your computer and proposes tasks.
+- The AI sees everything on your screen and proposes tasks.
+
+.. This all has to be done with a sharp focus on privacy and maybe a locally run or gated latency optimised AI that does the analysis quickly, so no external LLM gets access to all the persons info. 
+
+A neat feature could be that when the AI proposes a task, then it is automatically done in the background. So when the user clicks yes (preferably with a keyboard shortcut or through voice), then the link to the completed task immediately appears or shows. If the user rejects it, then the task gets cleaned up so the user won’t notice it.

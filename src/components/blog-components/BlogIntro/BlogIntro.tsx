@@ -51,32 +51,7 @@ export default function BlogIntro({
         
         {/* Meta information */}
         <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
-          {readTime && (
-            <div className="flex items-center gap-1">
-              <Clock className="w-4 h-4" />
-              <span>{readTime} read</span>
-            </div>
-          )}
-          
-          {author && (
-            <div className="flex items-center gap-1">
-              <User className="w-4 h-4" />
-              <span>By {author}</span>
-            </div>
-          )}
-          
-          {date && (
-            <time dateTime={date} className="text-gray-400">
-              {new Date(date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </time>
-          )}
-        </div>
-        
-        {/* Tags */}
+          {/* Tags */}
         {tags && tags.length > 0 && (
           <div className="flex items-center gap-2">
             <Tag className="w-4 h-4 text-gray-400" />
@@ -89,6 +64,51 @@ export default function BlogIntro({
             </div>
           </div>
         )}
+          
+          
+          {author && (
+            <div className="flex items-center gap-1">
+              <User className="w-4 h-4" />
+              <span>By {author}</span>
+            </div>
+          )}
+          
+          {date && (
+            <div className="flex items-center gap-1">
+              <Calendar className="w-4 h-4" />
+              <time dateTime={date} className="text-gray-400">
+                {(() => {
+                  // Parse YYYY-DD-MM format
+                  const [year, day, month] = date.split('-').map(Number);
+                  const dateObj = new Date(year, month - 1, day); // month is 0-indexed in JS
+                  
+                  const monthName = dateObj.toLocaleDateString('en-GB', { month: 'long' });
+                  
+                  // Add ordinal suffix to day
+                  const getOrdinalSuffix = (day: number) => {
+                    if (day > 3 && day < 21) return 'th';
+                    switch (day % 10) {
+                      case 1: return 'st';
+                      case 2: return 'nd';
+                      case 3: return 'rd';
+                      default: return 'th';
+                    }
+                  };
+                  
+                  return `${day}${getOrdinalSuffix(day)} of ${monthName} ${year}`;
+                })()}
+              </time>
+            </div>
+          )}
+          {readTime && (
+            <div className="flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              <span>{readTime}</span>
+            </div>
+          )}
+        </div>
+        
+        
       </div>
     </div>
   );
