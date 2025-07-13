@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Prose } from '@/components/ui/prose';
 import { Separator } from '@/components/ui/separator';
 import TableOfContents from '@/components/blog-components/TableOfContents';
-import { ScrollArea } from '@/components/ui/scroll-area';
+
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -64,24 +64,22 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
             {/* Main content */}
-            <ScrollArea className="max-w-4xl h-[calc(100vh-8rem)] pr-4 [&_*::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <div>
-                <PostContentClient content={postData.content} category={postData.category} />
-                {/* Back to blog link */}
-                <div className="mt-12">
-                  <Separator className="mb-8" />
-                  <Link 
-                    href="/blog"
-                    className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
-                  >
-                    <svg className="mr-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Back to blog
-                  </Link>
-                </div>
+            <div className="max-w-4xl">
+              <PostContentClient content={postData.content} category={postData.category} />
+              {/* Back to blog link */}
+              <div className="mt-12">
+                <Separator className="mb-8" />
+                <Link 
+                  href="/blog"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
+                >
+                  <svg className="mr-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Back to blog
+                </Link>
               </div>
-            </ScrollArea>
+            </div>
             
             {/* Table of Contents */}
             {postData.tocConfig?.enabled !== false && postData.toc.length > 0 && (

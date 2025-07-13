@@ -47,15 +47,19 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Add offset for fixed header (64px header + 32px padding = 96px)
-      const offset = 96;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
+      // Scroll to element with offset for fixed header
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
       });
+      
+      // Add offset after scroll to account for fixed header
+      setTimeout(() => {
+        window.scrollBy({
+          top: -96,
+          behavior: 'smooth'
+        });
+      }, 100);
     }
   };
 
