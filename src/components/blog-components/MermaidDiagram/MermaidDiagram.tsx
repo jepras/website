@@ -3,23 +3,93 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mermaid from 'mermaid';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { ZoomIn, ZoomOut, RotateCcw, Maximize2 } from 'lucide-react';
 
 interface MermaidDiagramProps {
   chart: string;
   title?: string;
   className?: string;
   variant?: 'default' | 'subtle' | 'bordered';
+  enableZoom?: boolean;
 }
 
 const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ 
   chart, 
   title, 
   className = '',
-  variant = 'default'
+  variant = 'default',
+  enableZoom = false
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [scale, setScale] = useState(1);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [translate, setTranslate] = useState({ x: 0, y: 0 });
+
+  const ZOOM_STEP = 0.2;
+  const MIN_SCALE = 0.3;
+  const MAX_SCALE = 3;
+
+  const zoomIn = () => {
+    setScale(prev => Math.min(prev + ZOOM_STEP, MAX_SCALE));
+  };
+
+  const zoomOut = () => {
+    setScale(prev => Math.max(prev - ZOOM_STEP, MIN_SCALE));
+  };
+
+  const resetZoom = () => {
+    setScale(1);
+    setTranslate({ x: 0, y: 0 });
+  };
+
+  const fitToView = () => {
+    if (svgRef.current && containerRef.current) {
+      const svg = svgRef.current;
+      const container = containerRef.current;
+      
+      const svgRect = svg.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      
+      const scaleX = containerRect.width / svgRect.width;
+      const scaleY = containerRect.height / svgRect.height;
+      const newScale = Math.min(scaleX, scaleY, 1) * 0.9; // 90% to add some padding
+      
+      setScale(newScale);
+      setTranslate({ x: 0, y: 0 });
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!enableZoom) return;
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - translate.x, y: e.clientY - translate.y });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!enableZoom || !isDragging) return;
+    setTranslate({
+      x: e.clientX - dragStart.x,
+      y: e.clientY - dragStart.y
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (!enableZoom) return;
+    e.preventDefault();
+    
+    const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP;
+    const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale + delta));
+    setScale(newScale);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -127,6 +197,17 @@ const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
         if (containerRef.current) {
           containerRef.current.innerHTML = svg;
           
+          // Find the SVG element and store reference
+          const svgElement = containerRef.current.querySelector('svg');
+          if (svgElement) {
+            svgRef.current = svgElement as SVGSVGElement;
+            
+            // Add transform origin and initial transform
+            svgElement.style.transformOrigin = 'center';
+            svgElement.style.transform = `translate(${translate.x}px, ${translate.y}px) scale(${scale})`;
+            svgElement.style.transition = 'transform 0.2s ease-out';
+          }
+          
           // Add custom CSS for smoother styling
           const style = document.createElement('style');
           style.textContent = `
@@ -165,6 +246,13 @@ const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
     }
   }, [chart]);
 
+  // Update SVG transform when scale or translate changes
+  useEffect(() => {
+    if (svgRef.current) {
+      svgRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px) scale(${scale})`;
+    }
+  }, [scale, translate]);
+
   const containerClasses = cn(
     'relative transition-all duration-300 ease-in-out',
     {
@@ -176,7 +264,7 @@ const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
   );
 
   const contentClasses = cn(
-    'flex justify-center items-center min-h-[200px] p-6 overflow-auto',
+    'flex justify-center items-center min-h-[200px] p-6 overflow-hidden relative',
     {
       'bg-gradient-to-br from-card to-card/80': variant === 'default',
       'bg-muted/20': variant === 'subtle',
@@ -223,8 +311,68 @@ const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
               'w-full transition-opacity duration-300',
               isLoading || error ? 'opacity-0' : 'opacity-100'
             )}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onWheel={handleWheel}
+            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
           />
         </div>
+
+        {/* Zoom Controls */}
+        {enableZoom && !isLoading && !error && (
+          <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <div className="flex flex-col gap-1 bg-background/80 backdrop-blur-sm border border-border rounded-lg p-1 shadow-lg">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={zoomIn}
+                disabled={scale >= MAX_SCALE}
+                className="h-8 w-8 p-0 hover:bg-primary/10"
+                title="Zoom In"
+              >
+                <ZoomIn className="h-4 w-4" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={zoomOut}
+                disabled={scale <= MIN_SCALE}
+                className="h-8 w-8 p-0 hover:bg-primary/10"
+                title="Zoom Out"
+              >
+                <ZoomOut className="h-4 w-4" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={resetZoom}
+                className="h-8 w-8 p-0 hover:bg-primary/10"
+                title="Reset View"
+              >
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={fitToView}
+                className="h-8 w-8 p-0 hover:bg-primary/10"
+                title="Fit to View"
+              >
+                <Maximize2 className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Zoom Level Indicator */}
+            <div className="bg-background/80 backdrop-blur-sm border border-border rounded-lg px-2 py-1 text-xs text-muted-foreground text-center">
+              {Math.round(scale * 100)}%
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

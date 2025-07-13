@@ -103,6 +103,7 @@ This system could have been done with just 1 agent, but giving each agent differ
 
 <Separator />
 
+
 The rest of this write up is for different audiences.. so click below if you: 
 - want to read more about the technical considerations
 - are curious about my learnings (mostly related to how to work with LLMs)
@@ -112,6 +113,13 @@ The rest of this write up is for different audiences.. so click below if you:
 
 ## Tech stack
 *You can skim an accurate & extensive, though not that interesting nor filtered, description of all the technical aspects of the project in this [deepwiki here](https://deepwiki.com/jepras/supa-vercel-infra).*
+
+My own aim with this project was to learn how to build a production ready AI Agent system using LLMs. There are a few steps in that:
+
+1. Figuring out the system architecture
+2. Figuring out what deployment providers to use
+3. Decide where on the scale of locally ready to enterprise ready the system should be
+4. Figuring out what LLM to use
 
 <TechStackBento 
   items={[
@@ -132,31 +140,14 @@ The rest of this write up is for different audiences.. so click below if you:
   columns={4} 
 />
 
-## Mermaid Diagram Test
-
-Here's a test of the new Mermaid diagram component:
-
-<MermaidDiagram 
-  title="Email Processing Flow"
-  variant="default"
-  chart={`
-graph TD
-    A[Email Sent] --> B[Webhook Trigger]
-    B --> C[AI Orchestrator]
-    C --> D[Analysis AI]
-    D --> E{Is it a deal?}
-    E -->|Yes| F[CRM AI]
-    E -->|No| G[Logging AI]
-    F --> H[Check for Duplicates]
-    H --> I[Create/Update CRM Objects]
-    I --> G
-    G --> J[Log Outcome]
-    
-    style A fill:#10b981,stroke:#10b981,color:#fff
-    style E fill:#f59e0b,stroke:#f59e0b,color:#fff
-    style J fill:#6b7280,stroke:#6b7280,color:#fff
-  `}
-/>
+- **Frontend**: Next.js, TypeScript, Tailwind CSS, Shadcn/ui components (deployed on Vercel)
+- **Backend**: Python FastAPI application (deployed on Railway)
+- **Database & Auth**: Supabase
+- **Integrations**: Pipedrive CRM, Microsoft Outlook
+- **AI**: LLM API for sales opportunity detection. Use OpenRouter
+- **Deployment**: Vercel (frontend) + Railway (backend) through Dockerfiles
+- **Triggers**: Webhook-driven when user sends emails
+- **Real-time**: Supabase subscriptions for live dashboard updates
 
 <MermaidDiagram 
   title="System Architecture"
@@ -224,34 +215,65 @@ sequenceDiagram
   `}
 />
 
-- **Frontend**: Next.js, TypeScript, Tailwind CSS, Shadcn/ui components (deployed on Vercel)
-- **Backend**: Python FastAPI application (deployed on Railway)
-- **Database & Auth**: Supabase
-- **Integrations**: Pipedrive CRM, Microsoft Outlook
-- **AI**: LLM API for sales opportunity detection. Use OpenRouter
-- **Deployment**: Vercel (frontend) + Railway (backend) through Dockerfiles
-- **Triggers**: Webhook-driven when user sends emails
-- **Real-time**: Supabase subscriptions for live dashboard updates
+<MermaidDiagram 
+  title="Step by step flow diagram"
+  variant="subtle"
+  enableZoom={true}
+  chart={`
+graph LR
+    subgraph "Email Processing Pipeline"
+        A[Email Webhook] --> B[Webhook Validation]
+        B --> C[Email Extraction]
+        C --> D[Content Analysis]
+    end
 
-My own aim with this project was to learn how to build a production ready AI Agent system using LLMs. There are a few steps in that:
+    subgraph "AI Analysis Layer"
+        D --> E[OpenRouter Client]
+        E --> F[Model Selection]
+        F --> G[Prompt Engineering]
+        G --> H[AI Response]
+        H --> I[Result Parsing]
+    end
 
-1. Figuring out the system architecture
-2. Figuring out what deployment providers to use
-3. Decide where on the scale of locally ready to enterprise ready the system should be
-4. Figuring out what LLM to use
+    subgraph "Business Logic"
+        I --> J{Opportunity?}
+        J -->|Yes| K[Deal Check]
+        J -->|No| L[Log Result Only]
+        K --> M{Deal Exists?}
+        M -->|No| N[Create Deal]
+        M -->|Yes| O[Log Existing Deal]
+    end
+
+    subgraph "Data Storage"
+        L --> P[Activity Logs]
+        N --> P
+        O --> P
+        P --> Q[Real-time Updates]
+    end
+
+    subgraph "User Interface"
+        Q --> R[Dashboard]
+        R --> S[Email Viewer]
+        R --> T[AI Analysis Display]
+        R --> U[Deal Status]
+        R --> V[Cost Monitor]
+    end
+
+    style E fill:#ff9999
+    style F fill:#ff9999
+    style G fill:#ff9999
+    style H fill:#ff9999
+    style V fill:#99ccff
+  `}
+/>
 
 
-### Figuring out the system architecture
 
-The system required:
-
-- User authentication
-- OAuth third party integrations
-- A database
-- Something catching the sent emails. Webhooks? Or message queues?
-- A backend for the AI orchestration
 
 Working with LLMs best practices state that one should discuss with multiple LLMs before generating a final specification doc that then can be used with an execution agent like Claude Code, Gemini CLI or Cursor.
 
 When doing that it’s important to remind the LLM to consider the scale of your application and what your learning goals actually are. It will often suggest very scaleable systems, which might be overkill for the beginning of a project.
+
+So as you can read, an attempt to not overcomplicate things before it is necessary - but also have it production ready for a client. 
+
 
