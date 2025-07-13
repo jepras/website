@@ -10,6 +10,36 @@ interface TableOfContentsProps {
 }
 
 export default function TableOfContents({ items, className }: TableOfContentsProps) {
+  const [activeId, setActiveId] = React.useState<string>('');
+
+  React.useEffect(() => {
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-20% 0px -35% 0px',
+        threshold: 0,
+      }
+    );
+
+    // Observe all headers
+    items.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [items]);
+
   if (!items || items.length === 0) {
     return null;
   }
@@ -17,7 +47,15 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Add offset for fixed header (64px header + 32px padding = 96px)
+      const offset = 96;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -30,13 +68,18 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
       6: 'ml-16',
     }[item.level] || 'ml-0';
 
+    const isActive = activeId === item.id;
+
     return (
       <li key={item.id} className={cn('mb-1', indentClass)}>
         <button
           onClick={() => scrollToSection(item.id)}
           className={cn(
-            'text-left text-sm text-muted-foreground hover:text-foreground transition-colors',
-            'hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded'
+            'text-left text-sm transition-colors w-full text-left px-2 py-1 rounded',
+            'hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background',
+            isActive 
+              ? 'text-primary font-medium bg-primary/10 border-l-2 border-primary' 
+              : 'text-muted-foreground hover:text-foreground'
           )}
         >
           {item.text}

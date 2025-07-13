@@ -17,6 +17,7 @@ export interface TocItem {
 export interface TocConfig {
   minLevel?: number;
   maxLevel?: number;
+  enabled?: boolean;
 }
 
 // Function to extract headers from MDX content
@@ -134,15 +135,33 @@ export function getSortedPostsData(): PostListItem[] {
   });
 }
 
-export async function getPostData(id: string, tocConfig?: TocConfig) {
+export async function getPostData(id: string, defaultTocConfig?: TocConfig) {
   const fullPath = path.join(postsDirectory, `${id}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
 
+  // Get ToC config from frontmatter or use defaults
+  const frontmatterData = matterResult.data as {
+    date: string;
+    title: string;
+    description?: string;
+    tags?: string[];
+    category?: string;
+    tocConfig?: TocConfig;
+  };
+
+  const tocConfig = {
+    minLevel: 2,
+    maxLevel: 4,
+    enabled: true,
+    ...defaultTocConfig,
+    ...frontmatterData.tocConfig,
+  };
+
   // Extract headers for table of contents
-  const toc = extractHeaders(matterResult.content, tocConfig);
+  const toc = tocConfig.enabled ? extractHeaders(matterResult.content, tocConfig) : [];
 
   // Get all available blog components
   const blogComponents = await getBlogComponents();
@@ -168,6 +187,7 @@ export async function getPostData(id: string, tocConfig?: TocConfig) {
     id,
     content: result.content,
     toc,
+    tocConfig,
     ...(result.frontmatter),
   };
 }
@@ -180,6 +200,7 @@ export type PostData = {
   description?: string;
   tags?: string[];
   category?: string;
+  tocConfig?: TocConfig;
   content: React.ReactNode; // Or a more specific type for MDX content
   toc: TocItem[];
 };

@@ -29,7 +29,7 @@ function PostContentClient({ content, category }: { content: React.ReactNode; ca
 // This will be a Server Component to fetch the post data
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const postData = await getPostData(slug, { minLevel: 2, maxLevel: 4 });
+  const postData = await getPostData(slug);
 
   return (
     <div className="min-h-screen bg-background">
@@ -84,9 +84,11 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
             </ScrollArea>
             
             {/* Table of Contents */}
-            <div className="lg:pl-8 lg:self-start">
-              <TableOfContents items={postData.toc} />
-            </div>
+            {postData.tocConfig?.enabled !== false && postData.toc.length > 0 && (
+              <div className="lg:pl-8 lg:self-start">
+                <TableOfContents items={postData.toc} />
+              </div>
+            )}
           </div>
         </div>
       </main>
