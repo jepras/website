@@ -391,7 +391,7 @@ The brain for all tracing, metrics & business events was the hardest choice as b
 
 ## Learnings
 
-### First attempt - Let Cursor freely vibecode an enterprise grade application
+### First attempt: Let Cursor freely vibecode an enterprise grade application
 
 <EmeraldCard variant="subtle">
 **Main error**: Believing Cursor could handle a multi tenant full stack application with third party integrations, microservices, dev/stage/prod environment & databases with little supervision.
@@ -412,7 +412,7 @@ What could go wrong??
 
 *Sidenote: I want to try again with full-stack deployment on Railway with multiple services & PostgreSQL. But I want to deploy incrementally.*
 
-### Second attempt - Lost trust in Gemini CLI in one day
+### Second attempt: Lost trust in Gemini CLI in one day
 
 <EmeraldCard variant="subtle">
 **Main error**: Thinking I could handle the same as before if i ran a full Google Cloud Platform infrastructure with Gemini CLI implementing and also Gemini setting up the infrastructure through terminal commands. 
@@ -426,7 +426,7 @@ You can probably read from the text where this is going. I think it actually did
 
 That’s probably a good product learning. Release quickly, but make damn sure you don’t lose the trust of your customers.
 
-### Third attempt - Careful step by step development
+### Third attempt: Careful step by step development
 *It seems obvious in hinsight careful oversight was needed, but hey, we all have to learn it the hard way*
 
 I actually wanted to try to run as many services as possible as Vercel functions in my third attempt (I have always been an admirer of serverless architecture). But i quickly came to dislike how the Python code ran in those functions and the complexity in developing locally first before testing in production. 
@@ -480,7 +480,7 @@ Also be aware of the AI using random library versions. I’d push it to mostly u
 
 **Don’t be afraid of stopping the Agent mid execution or writing wait in the chat to stop it.**
 
-### Other small ideas and common best practices
+#### Other small ideas and common best practices
 
 - Implement a design system as one of the first things.
 - Start a new chat often. If a feature emerges into something new, then ask the AI to summarise the context.
@@ -503,7 +503,7 @@ Also be aware of the AI using random library versions. I’d push it to mostly u
 
 .. I’m not doing this as often as I think is good for me at the moment. I get obsessed and advances too quickly sometimes instead of taking time to learn. Maybe that is the best way to keep momentum, but I’m definitely missing out on some ongoing learnings.
 
-### Other learnings
+#### Other learnings
 
 - Running Python code directly as Notebooks within VS Code/Cursor is a treat. Makes it so easy to see test code step by step. It was also essential for this project to refine the AI prompts and CRM duplicate testing quickly. When the code was done in the Python notebook test file, then the AI integrated that flow into the codebase without any errors.
 - I learned to use Ngrok to test webhooks in local development.
@@ -536,9 +536,9 @@ It’s also scary. This is how i refer to it after playing around with it for 2 
 
 <Separator />
 
-<Subheader level={2} variant="gradient">Potential</Subheader>
+## Potential
 
-### TL;DR 
+#### TL;DR 
 
 - Read emails sent → Take action. Actions could be much more than just CRM action. Hook the trigger up to any MCP and let it fly.
 - From reading emails sent to reading emails as they are being written to reading everything the user writes in the browser to reading everything the user writes on their mac.

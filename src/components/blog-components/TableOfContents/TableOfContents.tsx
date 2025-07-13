@@ -12,8 +12,6 @@ interface TableOfContentsProps {
 export default function TableOfContents({ items, className }: TableOfContentsProps) {
   const [activeId, setActiveId] = React.useState<string>('');
 
-
-
   React.useEffect(() => {
     if (!items.length) return;
 
@@ -26,8 +24,8 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
         });
       },
       {
-        rootMargin: '-20% 0px -35% 0px',
-        threshold: 0,
+        rootMargin: '-5% 0px -5% 0px',
+        threshold: 0.2,
       }
     );
 
@@ -54,8 +52,7 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
       const offset = 32; // Additional padding
       const totalOffset = headerHeight + offset;
       
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const targetPosition = elementPosition - totalOffset;
+      const targetPosition = element.offsetTop - totalOffset;
       
       window.scrollTo({
         top: targetPosition,
@@ -81,7 +78,7 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
           onClick={() => scrollToSection(item.id)}
           className={cn(
             'text-left text-sm transition-colors w-full text-left px-2 py-1 rounded',
-            'hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background',
+            'hover:underline focus:outline-none',
             isActive 
               ? 'text-primary font-medium bg-primary/10 border-l-2 border-primary' 
               : 'text-muted-foreground hover:text-foreground'
