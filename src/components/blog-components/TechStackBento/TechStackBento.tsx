@@ -28,6 +28,9 @@ export default function TechStackBento({
   className,
   itemClassName
 }: TechStackBentoProps) {
+  // Tailwind classes that need to be included for JIT compilation
+  // col-span-1 col-span-2 col-span-3 col-span-4 col-span-5 col-span-6
+  // row-span-1 row-span-2 row-span-3 row-span-4 row-span-5 row-span-6
   // Helper function to render different icon types
   const renderIcon = (item: TechStackItem) => {
     const { icon, iconType } = item;
@@ -94,7 +97,27 @@ export default function TechStackBento({
   const getItemSpan = (colSpan: number = 1, rowSpan: number = 1, maxColumns: number) => {
     // Ensure colSpan doesn't exceed the maximum columns
     const adjustedColSpan = Math.min(colSpan, maxColumns);
-    return `col-span-${adjustedColSpan} row-span-${rowSpan}`;
+    
+    // Use a mapping to ensure Tailwind includes these classes
+    const colSpanClasses = {
+      1: 'col-span-1',
+      2: 'col-span-2', 
+      3: 'col-span-3',
+      4: 'col-span-4',
+      5: 'col-span-5',
+      6: 'col-span-6'
+    };
+    
+    const rowSpanClasses = {
+      1: 'row-span-1',
+      2: 'row-span-2',
+      3: 'row-span-3', 
+      4: 'row-span-4',
+      5: 'row-span-5',
+      6: 'row-span-6'
+    };
+    
+    return `${colSpanClasses[adjustedColSpan as keyof typeof colSpanClasses] || 'col-span-1'} ${rowSpanClasses[rowSpan as keyof typeof rowSpanClasses] || 'row-span-1'}`;
   };
 
   const getItemStyles = (colSpan: number = 1, rowSpan: number = 1) => {
