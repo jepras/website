@@ -10,6 +10,8 @@ tocConfig:
   maxLevel: 3
 ---
 
+import { SquareMousePointer } from 'lucide-react';
+
 <BlogIntro
   title="Project: Action on Sent"
   description="Writeup of 'Action on Sent' - a project automating actions every time an email is sent"
@@ -28,26 +30,20 @@ One busy director, in need of more hours in the day, was tired by this loop. The
 With the unstructured & varying data in emails, then this couldn't be done with regular automations. So we decided to create an AI Agent system that could relieve him of one of these mundane tasks, and then expand to more workflows later.
 
 <HoverCard 
-  trigger="> Hover for background about me if you think that is important" 
-  triggerClassName="text-muted text-sm"
-
->
-  <div className="space-y-2">
-    <h4 className="font-semibold text-foreground !mt-0">Jeppe Rasmussen</h4>
-    <p className="text-sm text-muted-foreground">
-      Technology passionate, but not an engineer by education. I worked previously at Microsoft as a project manager I started learning to program the 2017 way 8 years ago, but then got away from programming the last 6 years as i founded the IoT company, Tector. I made the first proof of concept until we got a CTO. I was always heavily involved in product development, but not actively developing the product. 
-    </p>
-    <p className="text-sm text-muted-foreground">
-        Now I’m back trying to refine my technical skills by learning how to create AI systems and reflecting a ton on how one needs to learn to program in 2025.
-    </p>
-    
-  </div>
-</HoverCard> 
-<br />
-<HoverCard 
-  trigger="> Hover if you are a senior dev" 
+  trigger="Hover if you are curious about my background" 
   triggerClassName="text-muted-foreground text-sm"
+  badgeVariant="emerald"
+>
+Technology passionate, but not an engineer by education. I worked previously at Microsoft as a project manager I started learning to program the 2017 way 8 years ago, but then got away from programming the last 6 years as i founded the IoT company, Tector. I made the first proof of concept until we got a CTO. I was always heavily involved in product development, but not actively developing the product. 
 
+Now I’m back trying to refine my technical skills by learning how to create AI systems and reflecting a ton on how one needs to learn to program in 2025.
+  
+</HoverCard> 
+
+<HoverCard 
+  trigger="Hover if you are an experienced developer" 
+  triggerClassName="text-muted-foreground text-sm"
+  badgeVariant="emerald"
 >
   <div className="space-y-2">
     <h4 className="font-semibold text-foreground !mt-0">Thank you for reading</h4>
@@ -58,7 +54,7 @@ With the unstructured & varying data in emails, then this couldn't be done with 
      I strongly believe that I am learning so much faster than when I learned to program 8 years ago. I am not spending months getting a basic frontend to-do list app made that no one will use. I’m actually creating systems that people are using and learning quickly when taking the wrong decisions. 
     </p>
     <div className="text-xs text-muted-foreground">
-      <strong>Usage:The length of this article is definitely also overkill</strong>, but it's necessary in my own thought process to reflect and learn from this project. 
+      <strong>The length of this article is definitely also overkill</strong>, but it's necessary in my own thought process to reflect and learn from this project. 
     </div>
     
   </div>
@@ -80,7 +76,8 @@ It works in the following way:
 4. The Logging AI logs the outcome of the other AI’s for transparency & future improvements.
 
 <AnimatedSystemDiagram />
-### Why the use of an AI Agent flow for this instead of Zapier/Make?
+
+**Why the use of an AI Agent flow for this instead of Zapier/Make?**
 
 The email analyser makes text analysis hassle free. Deciding whether something is a potential deal = easy.
 
@@ -108,12 +105,10 @@ This system could have been done with just 1 agent, but giving each agent differ
 
 <Separator />
 
-
-
-The rest of this write up is for different audiences.. so click below if you: 
-- want to read more about the technical considerations ([jump to tech stack ↓](## Tech stack)
-- are curious about my learnings (mostly related to how to work with LLMs)
-- think that there must be some bigger potential with this application?
+#### The rest of this write up is for different audiences.. so click below if you: 
+- [want to read more about the technical considerations](#tech-stack)
+- [are curious about my learnings (mostly related to how to work with LLMs)](#learnings)
+- [think that there must be some bigger potential with this application?](#potential)
 <Separator />
 
 ## Tech stack
@@ -510,7 +505,7 @@ Also be aware of the AI using random library versions. I’d push it to mostly u
 - Learned to work in dev & prod environments. Having a deployment workflow for frontend and backend really helped me understand separations of concern.
 - Getting the AI to optimise the Docker build early was great for quicker production iterations.
 
-### What i need to learn next:
+#### What i need to learn next
 
 - I want to integrate monitoring from the beginning (maybe OpenTelemetry, Honeycomb, Sentry)
 - Work with +2 dev environments.

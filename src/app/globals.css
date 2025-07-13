@@ -74,4 +74,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Scroll margin for anchor links to account for fixed header */
+  h2, h3, h4, h5, h6 {
+    scroll-margin-top: 96px; /* 64px header height + 32px additional padding */
+  }
 } 
