@@ -16,11 +16,11 @@ export default function EmeraldCard({
   className,
   variant = 'default'
 }: EmeraldCardProps) {
-  const baseStyles = "rounded-lg border px-6 pb-6 pt-0 prose-*:mt-0";
+  const baseStyles = "rounded-lg border px-6 pt-0 prose-*:mt-0";
   
   const variantStyles = {
     default: "border-primary/20 text-primary bg-primary/10",
-    subtle: "border-primary/10 text-foreground bg-primary/5"
+    subtle: "border-primary/10 bg-primary/5"
   };
 
   return (

@@ -9,7 +9,7 @@ category: "Project"
 <BlogIntro
   title="Project: Action on Sent"
   description="Writeup of 'Action on Sent' - a project automating actions every time an email is sent"
-  readTime="5 min"
+  readTime="It's really fucking long, sorry. Probably a multiple hour"
   author="Jeppe Rasmussen"
   tags={["ai-agents", "python", "automations"]}
   date="2025-12-07"
@@ -55,6 +55,9 @@ This is a writeup of "Action on Sent".
     <p className="text-sm text-muted-foreground">
      I strongly believe that I am learning so much faster than when I learned to program 8 years ago. I am not spending months getting a basic frontend to-do list app made that no one will use. I’m actually creating systems that people are using and learning quickly when taking the wrong decisions. 
     </p>
+    <div className="text-xs text-muted-foreground">
+      <strong>Usage:The length of this article is definitely also overkill</strong>, but it's necessary in my own thought process to reflect and learn from this project. 
+    </div>
     
   </div>
 </HoverCard> 
@@ -314,4 +317,167 @@ Given the latest news about exploding unintended LLM costs, I started implementi
 
 ![Alt text for accessibility](/blog/project-action-on-sent/system-logs.png)
 
+**Business events** 
+
+Created Outcomes (Deals/Contacts Created)
+- 🆕 "Created: New contact, company & deal created" - Everything was new
+- 👥 "Created: Contact & company already exists" - Contact and company existed, but new deal created
+- 👤 "Created: Contact already exists" - Contact existed, but new deal created
+- 🏢 "Created: Company already exists" - Company existed, but new contact and deal created
+- 📧 "Created: New contact created (no company)" - New contact created for personal email
+
+Not Created Outcomes (Deals Skipped)
+- 🔄 "Not created: Deal already exists" - Contact exists and has open deals
+- 🚫 "Ignored: Not a sales deal" - AI determined it's not a sales opportunity
+
+Skipped Outcomes (Processing Skipped)
+- 🤔 "Skipped: Low confidence score" - AI confidence below 0.3 threshold
+- 📝 "Skipped: Invalid email format" - Email format issues
+- 🔁 "Skipped: Duplicate email detected" - Same email processed before
+
+Error Outcomes (Processing Failed)
+- 💥 "Error: Failed to process" - General processing failure
+- 🤖 "Error: AI analysis failed" - AI analysis specifically failed
+- 🔗 "Error: Pipedrive not available" - Pipedrive integration issues
+
+<Separator />
+
+My future setup for production ready AI Agent systems will probably be:
+
+**AI Gateway**: OpenRouter
+
+**AI Agent builder & AI observability:** LangChain & LangSmith
+
+**Tracing & metrics & business events:** Honeycomb
+
+**Error monitoring**: Sentry for backend & frontend
+
+1. **"Did my code crash?"** -> Go to **Sentry**.
+2. **"Why was this user's request slow?"** -> Go to **Honeycomb**.
+3. **"Why did the AI make that specific weird decision?"** -> Go to **LangSmith**.
+
+The reasoning behind these choices are a combination of ease of setup, good free tier / early pricing structure, flexibility, minimum extra code implementation & what I believe is good to learn. I wanted a future proof approach that doesn’t over complicate my dev workflow nor breaks the bank. 
+
+OpenRouter just makes sense in order to easily switch out AI models as the LLM providers keep upgrading their models & pricing.
+
+LangChain was chosen to learn LLM agnostic AI development.
+
+Sentry seems to be the go to tool for error monitoring. 
+
+The brain for all tracing, metrics & business events was the hardest choice as big chunky enterprise solutions had good free tiers (New Relic), open source solutions had some learning curve in setting up (Grafana, Prometheus, Loki..) and modern intriguing solutions (SigNoz) didn’t have good free tiers (even for self hosting). So I decided to test out Honeycomb.
+
 </MarkdownAccordion>
+
+
+**v2 tech stack**
+
+- **Frontend**: Next.js, TypeScript, Tailwind CSS, Shadcn/ui components (deployed on Vercel)
+- **Backend**: Python FastAPI application (deployed on Railway using Docker)
+- **Database & Auth**: Supabase
+- **Integrations**: MCP servers
+- **AI**: LLM API for sales opportunity detection. OpenRouter as Gateway (& cost & rate limits), LangChain for functions
+- **Monitoring:** OpenTelemetry (logs, metrics & traces) on Honeycomb, LangSmith for AI observability, Error tracking (Sentry).
+
+**What I have yet to implement**
+
+- Proper tests
+- Implement LangChain instead of OpenRouter functions
+- Rewrite monitoring aspect to fix Honeycomb & LangSmith
+- Install Sentry & set up alert system
+
+<Separator />
+
+## Learnings
+
+### First attempt - Let Cursor freely vibecode an enterprise grade application
+
+<EmeraldCard variant="subtle">
+**Main error**: Believing Cursor could handle a multi tenant full stack application with third party integrations, microservices, dev/stage/prod environment & databases with little supervision.
+</EmeraldCard>
+I wanted to learn to develop production ready systems, so without much prior experience I ambitiously journeyed out to try and create an application with multiple development environments, with different databases, third party app registrations for different environments and all of course deployed with Dockerfiles.
+
+I got carried away by some vibecoding influencers and thought if I just described the project thoroughly enough, then Cursor could implement it. 
+
+I spent a long time discussing different technical architectural choices, infrastructure providers, etc. That process was actually really valuable. I ended up with a tech stack similar to the one I actually used in my third attempt, though everything hosted on Railway, but with too little oversight about the management of the different development environments.
+
+I started just letting Cursor go and try to implement. When we got to the basic scaffolding (which was waaay too much in one go) and I had to deploy it, then I got into a hell trying to debug why the deployments were crashing.
+
+The LLM too often got confused about env keys for the different environments, what database to spin up through the Dockerfile and where I was storing the variables. Every fix the Cursor tried to make just made me and it got even more confused about what to do. It didn’t feel like it really understood the connection between the codebase and the infrastructure where we wanted to deploy it.
+
+So that was when I thought: 
+> *The newly launched Gemini CLI with it’s huge free token tier must be able to make sense of this. Especially if I do it all with pure Google infrastructure!*
+What could go wrong??
+
+*Sidenote: I want to try again with full-stack deployment on Railway with multiple services & PostgreSQL. But I want to deploy incrementally.*
+
+### Second attempt - Lost trust in Gemini CLI in one day
+
+<EmeraldCard variant="subtle">
+**Main error**: Thinking I could handle the same as before if i ran a full Google Cloud Platform infrastructure with Gemini CLI implementing and also Gemini setting up the infrastructure through terminal commands. 
+</EmeraldCard>
+
+I had previously worked with Firebase and my previous startup was running on GCP, so I felt confident that I could get the infrastructure to work there. With my newly earned learnings about the difference in development environments I tried carefully instructing Gemini CLI to be aware of the different environments.
+
+HackerNews was overflowing with experienced developers using Claude Code with great results, though expensive. So when the free Gemini CLI came out I got eager to try it and ready to see it’s magic. 
+
+You can probably read from the text where this is going. I think it actually did a lot of things right. And it probably could have worked in GCP. However within my first day of testing it I encountered waaay to many times that Gemini tried fixing an error by editing a code file, but the code file wasn’t actually edited, so when the edit (that didn’t happen) didn’t work (surprise), it went down a rabbit hole editing other correct files to make the code work. This seemed like such a basic capability that made me distrust Gemini immediately. 
+
+That’s probably a good product learning. Release quickly, but make damn sure you don’t lose the trust of your customers.
+
+### Third attempt - Careful step by step development
+*It seems obvious in hinsight careful oversight was needed, but hey, we all have to learn it the hard way*
+
+I actually wanted to try to run as many services as possible as Vercel functions in my third attempt (I have always been an admirer of serverless architecture). But i quickly came to dislike how the Python code ran in those functions and the complexity in developing locally first before testing in production. 
+
+So the frontend ended up being deployed on Vercel and the backend on Railway. For this project I decided to only use a dev & prod environment, 1 supabase database for both environments, and keeping third party app registrations as the same for dev & prod. Not best practices i know, but a foundation to start and improve on. 
+
+There is no microservice structure, but one monolith backend deployed as one service on Railway to simplify the management of env variables.
+
+#### What I did
+This is where i actually learned why Docker, pre deployment steps & github branches are great. <s>Also why it’s a stupid idea to have an AI generate your .gitignore & .vercelignore files as I might have had many hours wasted thanks to that.</s>
+
+For this project I also went back to using Cursor. It’s interface makes it easy to review code and setting up memories & rules. 
+
+And now i have good a modern tech stack & deployment flow that i am comfortable with and that i can expand & adapt with different projects 😊
+
+#### What I got right with this attempt
+
+- Outline and continuously refine a step by step plan with testable phases for Cursor to follow (`TASKS.md`). Explicitly instruct the LLM to create tasks to make the things work in development first, then production before advancing to next phase.
+- When introducing new libraries, endpoints or bigger changes to the codebase, then get a basic setup up, tested & deployed. And then add the necessary logic.
+- I used a more careful development flow:
+    - I created new branches when working on a new chunk of the project
+    - I followed the chat window more when the agent was writing code
+    - I told the AI tests it’s own implementation with small commands (preferably first) and then scripts.
+    - I always went through the pre deployment steps of building the Dockerfiles before merging back into
+
+#### My workflow
+
+At the start of the project I had a `PROJECT_OVERVIEW.md` file and a `TASKS.md` file. These gave the overall specifications and guidelines for the project. The task file is not a complete step by step file, but overall directions.  
+
+Then when starting on a new area or new feature I’d often open Claude & Google AI studio and ask for ways a specific outcome could be reached. This context was applied to a prompt for Cursor to refine the next phase tasks to do it in a certain way.
+
+Using that workflow I ensured Cursor always knew the overall direction, and when getting to a new phase then we would inject the task list with more specific guidance. 
+
+### **Complications**
+
+Cursor is great at just doing. [The prompt running their system is designed for that.](https://github.com/jujumilk3/leaked-system-prompts/blob/main/cursor-ide-sonnet_20241224.md) This works great when you don’t have any real requirements to the feature and just want an outcome.
+
+But when you have requirements, then you really need to steer it or it just finds *a* way. A way LLM coders bypass this is to use the initial specification doc and then generate a task list from that that gets updated. 
+
+Initially my workflow was discussing how a feature should be with Claude in a Claude Project where I had instructed it to always ask clarifying questions, and then having it generate code and copying it into my project. *Initially* this was much more reliable than Cursor code (in free mode), but copying/pasting became too tiring (I did learn how to quickly navigate around vs code with shortcuts and finding functions/files quickly though 🤓).
+
+It is also great at fixing bugs quickly. But not perfect. They can get quite stubborn that something is the error and then just tirelessly works on that. I have seen it in loops where it continuously accuses build caching, relative variable paths, wrong environment variables, etc. 
+
+Enabling yolo mode has also made my workflow quicker, however I quickly learned some rules I need to set to prevent certain actions. Like never commit to git or update [TASKS.md](http://TASKS.md) without me explicitly asking for it. Yolo mode is not recommended by Claude, [but I see more and more experienced developers on HackerNews using it in their workflows](https://spiess.dev/blog/how-i-use-claude-code). 
+
+I prefer to always follow what it is doing, but sometimes I get too trusting and start working on other things or make my lunch while it is flying. Most times to good results, but some times I also wish I had been there to stop it. 
+
+I have directed it towards easier solutions than an overly complicated path it had taken quite some times. I have also prevented it from introducing hardcoded variables and sample data.
+
+Also be aware of the AI using random library versions. I’d push it to mostly use latest instead of specifying it. I’ve also seen it suddenly downgrading libraries to fix a bug, where the bug could also be fixed in simpler and less dangerous ways. 
+
+**Don’t be afraid of stopping the Agent mid execution or writing wait in the chat to stop it.**
+
+<Separator />
+
+<Subheader level={2} variant="gradient">Potential</Subheader>
