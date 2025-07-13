@@ -95,7 +95,7 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
 
   return (
     <nav className={cn('hidden lg:block', className)}>
-      <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto">
+      <div className="fixed top-24 right-8 w-64 max-h-[calc(100vh-6rem)] overflow-y-auto bg-background/95 backdrop-blur-sm border border-border rounded-lg p-4 shadow-lg">
         <h2 className="text-lg font-semibold text-foreground mb-4">Table of Contents</h2>
         <ul className="space-y-1">
           {items.map(renderTocItem)}
