@@ -24,7 +24,7 @@ export default function Home() {
             Jeppe Rasmussen
           </h1>
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-8">
-            Ex-microsoft, ex-founder exploring new technical avenues
+            Builder exploring new technical avenues
           </p>
           
           
@@ -45,8 +45,8 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="prose prose-invert prose-lg mx-auto">
             <p className="text-muted-foreground text-center">
-              I write about web development, focusing on React, TypeScript, and modern web technologies.
-              Check out my <Link href="/blog" className="text-primary hover:text-primary/80">blog</Link> for the latest posts.
+              I develop modern AI assisted systems for people who need reliable solutions. 
+              Look at my <Link href="/blog" className="text-primary hover:text-primary/80">blog</Link> for the latest posts & project writeups.
             </p>
           </div>
         </div>

@@ -114,13 +114,6 @@ The rest of this write up is for different audiences.. so click below if you:
 ## Tech stack
 *You can skim an accurate & extensive, though not that interesting nor filtered, description of all the technical aspects of the project in this [deepwiki here](https://deepwiki.com/jepras/supa-vercel-infra).*
 
-My own aim with this project was to learn how to build a production ready AI Agent system using LLMs. There are a few steps in that:
-
-1. Figuring out the system architecture
-2. Figuring out what deployment providers to use
-3. Decide where on the scale of locally ready to enterprise ready the system should be
-4. Figuring out what LLM to use
-
 <TechStackBento 
   items={[
     { icon: 'nextjs', iconType: 'devicon', colSpan: 1, rowSpan: 1 },
@@ -139,6 +132,17 @@ My own aim with this project was to learn how to build a production ready AI Age
   ]} 
   columns={4} 
 />
+
+My own aim with this project was to learn how to build a production ready AI Agent system using LLMs. There are a few steps in that:
+
+1. Figuring out the system architecture
+2. Figuring out what deployment providers to use
+3. Decide where on the scale of locally ready to enterprise ready the system should be
+4. Figuring out what LLM to use
+
+Working with LLMs best practices state that one should discuss with multiple LLMs before generating a final specification doc that then can be used with an execution agent like Claude Code, Gemini CLI or Cursor.
+
+When doing that it’s important to remind the LLM to consider the scale of your application and what your learning goals actually are. It will often suggest very scaleable systems, which might be overkill for the beginning of a project.
 
 - **Frontend**: Next.js, TypeScript, Tailwind CSS, Shadcn/ui components (deployed on Vercel)
 - **Backend**: Python FastAPI application (deployed on Railway)
@@ -267,13 +271,47 @@ graph LR
   `}
 />
 
-
-
-
-Working with LLMs best practices state that one should discuss with multiple LLMs before generating a final specification doc that then can be used with an execution agent like Claude Code, Gemini CLI or Cursor.
-
-When doing that it’s important to remind the LLM to consider the scale of your application and what your learning goals actually are. It will often suggest very scaleable systems, which might be overkill for the beginning of a project.
-
 So as you can read, an attempt to not overcomplicate things before it is necessary - but also have it production ready for a client. 
 
+<MarkdownAccordion title="AI assisted devs make flawed applications" defaultOpen={false}>
+If I had to learn programming all from scratch and all security best practices from scratch, then it would take me +5 years to make applications that are not flawed. 
 
+I am a rookie developer, so I don’t know all my blind spots. When implementing an enterprise ready solution I’d always consult with a deployment & security consultant. And an experienced programmer to ensure reliability in my code. 
+
+But to get started on projects I believe LLMs can make me aware of at least 80% of potential issues. 
+
+In this project i have implemented these best practices for reliability, deployment & security:
+
+- Containerized deployment
+- Comprehensive monitoring
+- Token security
+- Row level security
+- Error handling & retry logic (Devin tells me this, but I know that this is not done throughout the entire codebase as I have prioritised speed to get to a working MVP)
+- Environment configuration
+
+Devin has made me aware of these following reliability, deployment & security best practices I could work on:
+
+- Distributed tracing
+- Proactive alerting
+- Circuit breakers
+- Backup & recovery
+- Security headers
+
+I also know myself that I need to improve on CORS. I also know I haven’t double checked the types. 
+
+So at least I know some of the areas to improve. If I didn’t have LLMs to help me, then it would take a long time to understand what I was missing in this project. 
+
+Furthermore, when working with LLMs, like working with any tool, the user needs to be aware of it’s constraints & weaknesses. That is why I do read on how to prevent prompt injecting & where to be aware in the development flow (like making sure the LLM doesn’t get your env variables).
+</MarkdownAccordion>
+<MarkdownAccordion title="My work on the logging aspect is not done yet, but you can read draft thoughts here" defaultOpen={false}>
+One of the main things i wanted to learn was to make production ready AI automations instead of basic n8n automations where i wasn’t in control and would be worried about it crashing. This was a simple use case, but i wanted to treat it as a critical workflow as i wanted to give the client assurance that more things could be automated. 
+
+Cursor did an okay job in creating some basic performance monitoring and application logic monitoring. However, it clearly occured to me how huge a topic this is and that the v2 of this project will definitely be about how to implement proper best practice monitoring with OpenTelemetry, Sentry & LangSmith. 
+
+The current version has some monitoring in it and shown in the frontend, but this will be separated into a different database & admin dashboard with only the backend only fetching specific business events and showing them in the frontend. 
+
+Given the latest news about exploding unintended LLM costs, I started implementing limits & trackers on the API calls & AI operations. The second objective was to log business events properly, as that was key for me to understand when the solution starts getting used.
+
+![Alt text for accessibility](/blog/project-action-on-sent/system-logs.png)
+
+</MarkdownAccordion>

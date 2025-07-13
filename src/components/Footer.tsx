@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="md:pr-8">
             <h3 className="text-foreground font-semibold mb-4">jeppe rasmussen</h3>
             <p className="text-muted-foreground">
-              ex-microsoft, ex-founder exploring new technical avenues
+              Builder exploring new technical avenues
             </p>
           </div>
           <div>

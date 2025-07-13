@@ -14,7 +14,7 @@ export default function About() {
             about me
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            ex-microsoft, ex-founder exploring new technical avenues
+            Builder exploring new technical avenues
           </p>
         </div>
       </section>
@@ -44,14 +44,6 @@ export default function About() {
               build and interact with software. You can follow my journey through my 
               <Link href="/blog"> blog</Link>, where I share insights about AI, machine learning, 
               and modern software development.
-            </p>
-
-            <h2>open source</h2>
-            <p>
-              I believe in the power of open source and actively contribute to various projects. 
-              My focus is on tools and libraries that make AI and machine learning more accessible 
-              to developers. You can find my contributions on 
-              <a href="https://github.com/jepras" target="_blank" rel="noopener noreferrer"> GitHub</a>.
             </p>
 
             <h2>connect</h2>
