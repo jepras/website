@@ -6,6 +6,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Prose } from '@/components/ui/prose';
 import { Separator } from '@/components/ui/separator';
+import TableOfContents from '@/components/blog-components/TableOfContents';
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -27,7 +28,7 @@ function PostContentClient({ content, category }: { content: React.ReactNode; ca
 // This will be a Server Component to fetch the post data
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const postData = await getPostData(slug);
+  const postData = await getPostData(slug, { minLevel: 2, maxLevel: 4 });
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,21 +60,31 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
 
       {/* Content */}
       <main className="pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <PostContentClient content={postData.content} category={postData.category} />
-          
-          {/* Back to blog link */}
-          <div className="mt-12">
-            <Separator className="mb-8" />
-            <Link 
-              href="/blog"
-              className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
-            >
-              <svg className="mr-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to blog
-            </Link>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
+            {/* Main content */}
+            <div className="max-w-4xl">
+              <PostContentClient content={postData.content} category={postData.category} />
+              
+              {/* Back to blog link */}
+              <div className="mt-12">
+                <Separator className="mb-8" />
+                <Link 
+                  href="/blog"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
+                >
+                  <svg className="mr-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Back to blog
+                </Link>
+              </div>
+            </div>
+            
+            {/* Table of Contents */}
+            <div className="lg:pl-8">
+              <TableOfContents items={postData.toc} />
+            </div>
           </div>
         </div>
       </main>

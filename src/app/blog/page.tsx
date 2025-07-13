@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getSortedPostsData, PostData } from "@/lib/content";
+import { getSortedPostsData, PostListItem } from "@/lib/content";
 import Link from "next/link";
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 // This will be a Client Component
 function BlogPostListClient({
   allPostsData,
-}: { allPostsData: (Omit<PostData, 'content'> & { id: string; category?: string })[] }) {
+}: { allPostsData: (PostListItem & { id: string; category?: string })[] }) {
   return (
     <div className="space-y-6">
       {allPostsData.map(({ id, date, title, description, category = "Uncategorized" }) => (
