@@ -12,6 +12,8 @@ interface TableOfContentsProps {
 export default function TableOfContents({ items, className }: TableOfContentsProps) {
   const [activeId, setActiveId] = React.useState<string>('');
 
+
+
   React.useEffect(() => {
     if (!items.length) return;
 
@@ -47,19 +49,18 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Scroll to element with offset for fixed header
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
+      // Calculate the target position with offset for fixed header
+      const headerHeight = 64; // Height of the fixed header
+      const offset = 32; // Additional padding
+      const totalOffset = headerHeight + offset;
       
-      // Add offset after scroll to account for fixed header
-      setTimeout(() => {
-        window.scrollBy({
-          top: -96,
-          behavior: 'smooth'
-        });
-      }, 100);
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const targetPosition = elementPosition - totalOffset;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -93,8 +94,8 @@ export default function TableOfContents({ items, className }: TableOfContentsPro
   };
 
   return (
-    <nav className={cn('hidden lg:block h-fit', className)}>
-      <div className="sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto">
+    <nav className={cn('hidden lg:block', className)}>
+      <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto">
         <h2 className="text-lg font-semibold text-foreground mb-4">Table of Contents</h2>
         <ul className="space-y-1">
           {items.map(renderTocItem)}
