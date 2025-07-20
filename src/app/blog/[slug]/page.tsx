@@ -32,7 +32,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
   const postData = await getPostData(slug);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-page">
       <Header />
       
       {/* Hero Section */}

@@ -34,6 +34,7 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --separator-color: rgb(16 185 129 / 0.2); /* emerald-500 with 20% opacity */
   }
   
   .dark {
@@ -62,6 +63,7 @@
     --chart-3: 160 40% 35%; /* emerald-700 */
     --chart-4: 160 80% 55%; /* emerald-400 */
     --chart-5: 160 90% 65%; /* emerald-300 */
+    --separator-color: rgb(16 185 129 / 0.2); /* emerald-500 with 20% opacity */
   }
 }
 
@@ -83,5 +85,19 @@
   /* Scroll margin for anchor links to account for fixed header */
   h2, h3, h4, h5, h6 {
     scroll-margin-top: 96px; /* 64px header height + 32px additional padding */
+  }
+}
+
+@layer utilities {
+  .bg-gradient-page {
+    background: linear-gradient(to bottom, rgb(16 185 129 / 0.08), rgb(16 185 129 / 0.04), transparent);
+  }
+  
+  .border-separator {
+    border-color: var(--separator-color);
+  }
+  
+  .separator-emerald {
+    background-color: var(--separator-color) !important;
   }
 } 

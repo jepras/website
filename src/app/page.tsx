@@ -11,14 +11,11 @@ export default function Home() {
   // const allPostsData = getSortedPostsData(); // No need to fetch all posts here
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-page">
       <Header />
       
       {/* Hero Section */}
       <section className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent" />
-        
         <div className="relative max-w-4xl mx-auto text-center">
           <h1 className="text-5xl sm:text-6xl font-bold text-foreground mb-6">
             Jeppe Rasmussen

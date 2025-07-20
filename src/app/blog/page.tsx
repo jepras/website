@@ -34,14 +34,15 @@ function BlogPostListClient({
             )}
           </CardHeader>
           <CardFooter>
-            <Button asChild variant="ghost" className="p-0 h-auto">
-              <Link href={`/blog/${id}`}>
-                Read more
-                <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </Button>
+            <Link 
+              href={`/blog/${id}`}
+              className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors"
+            >
+              Read more
+              <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </CardFooter>
         </Card>
       ))}
@@ -54,7 +55,7 @@ export default function BlogList() {
   const allPostsData = getSortedPostsData();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-page">
       <Header />
       
       {/* Hero Section */}
